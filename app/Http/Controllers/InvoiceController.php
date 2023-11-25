@@ -2,18 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Invoice;
-use Illuminate\Support\Facades\DB;
 
 class InvoiceController extends Controller
 {
+    public $invoice;
     /**
      * Display a listing of the resource.
      */
+
+    public function __construct(Invoice $invoice)
+    {
+        $this->invoice = $invoice;
+    }
     public function index()
     {
-        $invoices = Invoice::get();
+        $invoices = $this->invoice->getInvoices();
         return view('invoice', ['invoices' => $invoices]);
     }
 
@@ -30,20 +36,11 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
-        $invoice = new Invoice;
-
-        $invoice->type = $request->type;
-        $invoice->product_service = $request->product_service;
-        $invoice->quantity = $request->quantity;
-        $invoice->base_price = $request->base_price;
-        $invoice->subtotal = $request->base_price * $request->quantity;
-
-        // DB::transaction(function ($request, $invoice) {
-            $invoice->save();
-        // });
+        $this->invoice->storeInvoice($request);
 
         return redirect('/invoices');
     }
+
 
     /**
      * Display the specified resource.
@@ -58,9 +55,10 @@ class InvoiceController extends Controller
      */
     public function edit(string $id)
     {
-        $invoice = Invoice::find($id);
+        $invoice = $this->invoice->getOneInvoice($id);
+        $users = User::get();
 
-        return view('invoices.invoice-edit', ['invoice' => $invoice]);
+        return view('invoices.invoice-edit', ['invoice' => $invoice, 'customers' => $users]);
     }
 
     /**
@@ -71,7 +69,7 @@ class InvoiceController extends Controller
 
         $invoice = Invoice::find($id);
 
-        if($invoice) {
+        if ($invoice) {
             $invoice->update([
                 'type' => $request->type,
                 'product_service' => $request->product_service,

@@ -1,42 +1,35 @@
 @extends('layout.base')
 
 @section('content')
-    <div>
+    <section class="container mx-auto">
         <div class="flex justify-between">
-            <h1 class="text-lg">Invoices</h1>
-            <a href="/invoices/create" class="text-blue-600">Create Invoice</a>
+            <h1>Invoices</h1>
+            <form action={{ route('invoices.store') }} method="post">
+                @csrf
+                <button
+                    class="p-2 border border-slate-300 rounded bg-slate-200 hover:border-slate-200  hover:bg-slate- shadow-sm">Create
+                    Invoice</button>
+            </form>
         </div>
-        <table class="table-auto mt-5">
-            <thead>
-                <th>Type</th>
-                <th>Product / Service</th>
-                <th>Quantity</th>
-                <th>Base Price</th>
-                <th>Subtotal</th>
-                <th>Action</th>
-            </thead>
-            <tbody>
-                {{-- @isset($invoices) --}}
-                @foreach ($invoices as $invoice)
-                    <tr>
-                        <td>{{ $invoice->type }}</td>
-                        <td>{{ $invoice->produce_service }}</td>
-                        <td>{{ $invoice->quantity }}</td>
-                        <td>{{ $invoice->base_price }}</td>
-                        <td>{{ $invoice->subtotal }}</td>
-                        <td class="flex items-center space-x-4">
-                            <a href="/invoices/edit/{{ $invoice->id }}" class="text-green-500">Edit</a>
-                            <form action="/invoices/delete/{{ $invoice->id }}" method="post">
-                                @method('DELETE')
-                                @csrf
-                                <button class="text-rose-500">Delete</button>
-                            </form>
-                            <a href="/payment/show/{{ $invoice->id }}" class="text-violet-500">Payment</a>
-                        </td>
-                    </tr>
-                @endforeach
-                {{-- @endisset --}}
-            </tbody>
-        </table>
-    </div>
+        <div class="mt-2">
+            <ul>
+                @isset($invoices)
+                    @if (count($invoices) > 0)
+                        @foreach ($invoices as $invoice)
+                            <li class="border rounded-lg hover:bg-slate-200 cursor-pointer mt-2 p-2">
+                                <a href={{ route('invoices.edit', ['invoice' => $invoice->id]) }}>
+                                    <div>
+                                        <h2>{{ $invoice->invoice_number }}</h2>
+                                        <p>Date: {{ $invoice->invoice_date }}</p>
+                                    </div>
+                                </a>
+                            </li>
+                        @endforeach
+                    @else
+                        <li>No invoices...</li>
+                    @endif
+                @endisset
+            </ul>
+        </div>
+    </section>
 @endsection

@@ -1,10 +1,12 @@
 @extends('layout.base')
 
 @section('content')
-    <h1>Homepage</h1>
     <section>
-        <header>
+        <h1>Homepage</h1>
+        <section>
+            <header>
 
-        </header>
+            </header>
+        </section>
     </section>
 @endsection

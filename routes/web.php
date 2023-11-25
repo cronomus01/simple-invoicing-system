@@ -27,12 +27,7 @@ Route::post('/login', [LoginController::class, 'store']);
 
 Route::get('/home', [HomeController::class, 'index']);
 
-Route::get('/invoices', [InvoiceController::class, 'index']);
-Route::get('/invoices/create', [InvoiceController::class, 'create']);
-Route::post('/invoices/store', [InvoiceController::class, 'store']);
-Route::get('/invoices/edit/{id}', [InvoiceController::class, 'edit']);
-Route::put('/invoices/update/{id}', [InvoiceController::class, 'update']);
-Route::delete('/invoices/delete/{id}', [InvoiceController::class, 'destroy']);
+Route::resource('/invoices', InvoiceController::class);
 
 Route::get('/payment/show/{id}', [PaymentController::class, 'show']);
 Route::post('/payment/store/{id}', [PaymentController::class, 'store']);
