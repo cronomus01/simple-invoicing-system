@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Invoice;
+use Illuminate\Support\Str;
 
 class InvoiceController extends Controller
 {
@@ -28,7 +29,11 @@ class InvoiceController extends Controller
      */
     public function create()
     {
-        return view('invoices.invoice-create');
+
+        $invoice_number = Str::uuid();
+        $customers = User::get()->all();
+        $invoices = Invoice::all();
+        return view('invoices.invoice-create', compact('invoice_number', 'customers', 'invoices'));
     }
 
     /**
@@ -38,7 +43,7 @@ class InvoiceController extends Controller
     {
         $this->invoice->storeInvoice($request);
 
-        return redirect('/invoices');
+        return redirect('dashboard');
     }
 
 
@@ -56,9 +61,10 @@ class InvoiceController extends Controller
     public function edit(string $id)
     {
         $invoice = $this->invoice->getOneInvoice($id);
+        $invoices = $this->invoice->getInvoices();
         $users = User::get();
 
-        return view('invoices.invoice-edit', ['invoice' => $invoice, 'customers' => $users]);
+        return view('invoices.invoice-edit', compact('invoice', 'invoices', 'users'));
     }
 
     /**

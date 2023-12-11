@@ -1,11 +1,12 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\LoginController;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InvoiceController;
-use App\Http\Controllers\PaymentController;
-
+use App\Http\Controllers\LoginController;
+use App\Http\Middleware\Authenticate;
+use App\Http\Middleware\IsAuth;
+use App\Http\Middleware\RedirectIfAuthenticated;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,21 +14,21 @@ use App\Http\Controllers\PaymentController;
 |--------------------------------------------------------------------------
 |
 | Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
 |
 */
 
+// Route::middleware(Authenticate::class)->get('/', function () {
+//     return view('home');
+// });
+
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login.index');
 });
 
-Route::get('/login', [LoginController::class, 'index']);
-Route::post('/login', [LoginController::class, 'store']);
+Route::middleware([RedirectIfAuthenticated::class])->resource('/login', LoginController::class);
+Route::middleware([IsAuth::class])->resource('/dashboard', DashboardController::class);
+Route::middleware([IsAuth::class])->resource('/invoice', InvoiceController::class);
 
-Route::get('/home', [HomeController::class, 'index']);
-
-Route::resource('/invoices', InvoiceController::class);
-
-Route::get('/payment/show/{id}', [PaymentController::class, 'show']);
-Route::post('/payment/store/{id}', [PaymentController::class, 'store']);
+require __DIR__ . '/auth.php';

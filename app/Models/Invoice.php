@@ -15,7 +15,7 @@ class Invoice extends Model
     use HasFactory;
 
     protected $table = 'invoice';
-    protected $fillable = ['invoice_number', 'invoice_date'];
+    protected $fillable = ['invoice_number', 'invoice_date', 'customer_id'];
 
     public function storeInvoice(Request $request)
     {
@@ -24,9 +24,10 @@ class Invoice extends Model
         $this->fill([
             'invoice_number' => $uuid,
             'invoice_date' => now(),
+            'customer_id' => $request->input('customer_id')
         ]);
 
-        $this->save();
+        return $this->save();
     }
 
     public function getInvoices(): Collection
@@ -37,5 +38,10 @@ class Invoice extends Model
     public function getOneInvoice($id): Invoice
     {
         return $this->find($id);
+    }
+
+    public function customer()
+    {
+        return $this->hasOne(User::class, 'id', 'customer_id');
     }
 }

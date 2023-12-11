@@ -11,21 +11,19 @@
     @vite('resources/css/app.css')
 </head>
 
-<body>
-    <header class="p-2">
-        <nav>
-            <h1>Logo</h1>
-        </nav>
-    </header>
-    <aside class="p-2">
-        <ul>
-            <li>
-                <a href="/invoices" class="text-blue-600">Invoices</a>
-            </li>
-        </ul>
+<body class="grid grid-cols-desktop gap-3 p-3 bg-slate-50">
+    <aside>
+        <div>
+            <x-nav type="aside-nav" />
+            <x-search-invoice />
+            <x-invoice-list :invoices="$invoices" />
+        </div>
     </aside>
     <main>
-        @yield('content')
+        <x-nav type="content-nav" />
+        <section>
+            @yield('content')
+        </section>
     </main>
 </body>
 
