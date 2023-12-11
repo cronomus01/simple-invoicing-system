@@ -96,5 +96,5 @@
 
 
 @push('scripts')
-    @vite('resources/js/edit-invoice.js')
+    {{-- @vite('resources/js/edit-invoice.js') --}}
 @endpush
