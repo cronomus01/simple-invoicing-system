@@ -5,10 +5,12 @@ const saveButtonEl = document.getElementById('save');
 const addItemBtn = document.getElementById('add-item-btn');
 const tableBody = document.getElementById('table-body');
 
-function clickButton(button, name, callback) {
+export function clickButton(button, name, callback) {
     try {
-        button.addEventListener('click', () => {
+        button.addEventListener('click', (e) => {
+            e.preventDefault()
             callback();
+            e.stopImmediatePropagation();
         })
     }
     catch(err) {
@@ -20,9 +22,6 @@ function openModal() {
     if(modal.classList.contains('hidden')){
         modal.classList.remove('hidden')
         modal.classList.add('flex')
-    } else {
-        modal.classList.remove('flex')
-        modal.classList.add('hidden')
     }
 }
 

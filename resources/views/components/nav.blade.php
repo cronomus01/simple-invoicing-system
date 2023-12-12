@@ -1,4 +1,4 @@
-<div>
+<div class="print:hidden">
     @switch($type)
         @case('content-nav')
             <nav>

@@ -7,6 +7,10 @@ content: [
     ],
   theme: {
     extend: {
+        screens: {
+            print: { raw: 'print'  },
+            screen: { raw: 'screen' },
+        },
         gridTemplateColumns: {
           // Simple 16 column grid
           'desktop': '17em 1fr',
@@ -15,6 +19,7 @@ content: [
         gridTemplateRows: {
           'content': '60px 1fr',
         },
+
       },
   },
   plugins: [],

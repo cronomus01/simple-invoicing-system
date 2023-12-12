@@ -12,7 +12,7 @@
 </head>
 
 <body class="grid grid-cols-desktop gap-3 p-3 bg-slate-50 relative h-full">
-    <aside>
+    <aside class="print:hidden">
         <div>
             <x-nav type="aside-nav" />
             <x-search-invoice />

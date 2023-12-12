@@ -1,25 +1,25 @@
 @extends('layout.base')
 
 @section('content')
-    <section class="grid grid-cols-desktop gap-2 pt-5">
+    <section class="grid grid-cols-desktop gap-2 pt-5 print:p-0">
         <aside class="overflow-y-auto h-[90vh] pr-2">
             <x-invoice-list :invoices="$invoices" />
         </aside>
-        <section>
+        <section class="print:w-screen print:h-full print:absolute print:inset-0">
             <form action={{ route('invoice.update', ['invoice' => isset($invoice->id) ? $invoice->id : 0]) }} method="POST"
-                class="border bg-white px-4 py-6" id="invoice-item">
+                class="border bg-white px-4 py-6 print:border-0" id="invoice-form">
                 @method('PUT')
                 @csrf
                 <input type="hidden" name="customer_id" id="customer-input-id"
-                    value="{{ isset($invoice->id) ? $invoice->customer->id : 0 }}">
-                <section class="flex justify-between pr-10 mb-10">
-                    <section class="flex gap-2">
+                    value="{{ isset($invoice->id) ? $invoice->customer->id : 0 }}" class="">
+                <section class="flex justify-between pr-10 mb-10 print:flex print:justify-between print:pr-0">
+                    <section class="screen:flex print:flex">
                         <figure>
                             <img src="{{ asset('assets/icons/irefrans-cosme.png') }}" alt="irefrans cosme logo"
-                                class="w-[10em]">
+                                class="print:w-[120px] screen:w-[10em]">
                         </figure>
-                        <section>
-                            <h1 class="uppercase text-3xl mb-2">Company Name</h1>
+                        <section class="print:float-right">
+                            <h1 class="uppercase text-3xl mb-2 print:text-lg print:font-bold">Company Name</h1>
                             <article>
                                 <p>460-1086, Kitazukamachi</p>
                                 <p>+81 +8171-562-7817</p>
@@ -28,25 +28,31 @@
                         </section>
                     </section>
                     <section>
-                        <h1 class="uppercase text-3xl mb-2">Invoice
+                        <h1 class="uppercase text-3xl mb-2 print:text-right print:text-lg print:font-bold">Invoice
                             #{{ isset($invoice) ? Str::limit($invoice->invoice_number, '8', '') : '' }}</h1>
                         <article>
-                            <p class="text">Date:
+                            <p class="text print:text-right">Date:
                                 {{ isset($invoice) ? date('F d, Y', strtotime($invoice->invoice_date)) : '' }}
                             </p>
+                            <p class="text print:text-right print:block screen:hidden">Name:
+                                {{ isset($invoice->customer->name) ? $invoice->customer->name : 'N/A' }}
+                            </p>
+                            <p class="text print:text-right print:block screen:hidden">Email:
+                                {{ isset($invoice->customer->name) ? $invoice->customer->email : 'N/A' }}
+                            </p>
                         </article>
-                        <article class="mt-2 gap-5 relative max-w-fit">
+                        <article class="mt-2 gap-5 relative max-w-fit print:mt-0 print:hidden">
                             <label for="" class="block">Name:
                                 <input type="text" id="customer-input"
                                     value="{{ isset($invoice->customer->name) ? $invoice->customer->name : 'N/A' }}"
-                                    class="border px-2 rounded pointer-events-none customer-input">
+                                    class="border px-2 rounded pointer-events-none customer-input print:px-0">
                             </label>
-                            <label for="" class="block mt-2">Email:
+                            <label for="" class="block mt-2 print:mt-0">Email:
                                 <input type="text" id="customer-input-email"
                                     value="{{ isset($invoice->customer->name) ? $invoice->customer->email : 'N/A' }}"
-                                    class="border px-2 rounded pointer-events-none customer-input-email">
+                                    class="border px-2 rounded pointer-events-none customer-input-email print:px-0">
                             </label>
-                            <menu class="absolute top-0 right-[-2em] mt-0">
+                            <menu class="absolute top-0 right-[-2em] mt-0 print:hidden">
                                 <li>
                                     <button type="button" id="edit-button">
                                         <figure><img src="{{ asset('assets/icons/icons8-edit-96.png') }}" alt="edit icon"
@@ -95,8 +101,11 @@
                                                     value="{{ $item->product_service }}">
                                             </td>
                                             <td class="p-3">
-                                                <input type="number" min="0" class="w-full h-full quantity"
+                                                <input type="number" min="0" class="w-full h-full quantity print:hidden"
                                                     value={{ $item->quantity }} name="quantity[]">
+                                                <p class="screen:hidden">
+                                                    {{ $item->quantity }}
+                                                </p>
                                             </td>
                                             <td class="p-3">
                                                 <input type="text" class="w-full h-full base-price" name="base_price[]"
@@ -114,8 +123,8 @@
 
                     </div>
                 </fieldset>
-                <fieldset class="flex justify-between items-start">
-                    <menu>
+                <fieldset class="flex justify-between items-start print:flex print:justify-end">
+                    <menu class="print:hidden">
                         <li>
                             <button type="button"
                                 class="px-2 border mt-2 border-slate-300 rounded bg-slate-200 hover:border-slate-200  hover:bg-slate- shadow-sm text-sm"
@@ -141,9 +150,12 @@
                                 <td class="py-1 text-right font-bold">
                                     Discount
                                 </td>
-                                <td>
-                                    <input type="text" class="w-full h-full pl-2 text-right" name="discount"
-                                        value="{{ isset($invoice->total) ? intval($invoice->total->discount) : 0 }}% ">
+                                <td class="flex items-center justify-end">
+                                    <h1>
+
+                                    </h1>
+                                    <input type="text" class="pl-2 text-right" name="discount"
+                                        value="P{{ $discountedPrice }} ({{ isset($discountedPrice) ? intval($invoice->total->discount) : 0 }}%) " />
                                 </td>
                             </tr>
                             <tr class="border-b">
@@ -167,16 +179,17 @@
                     </table>
                 </fieldset>
             </form>
-            <menu class="flex justify-between">
+            <menu class="flex justify-between print:hidden">
                 <li>
                     <button type="submit" class="border px-4 py-1 rounded mt-2 bg-slate-300 hover:shadow"
-                        form="invoice-item">Save</button>
+                        form="invoice-form">Save</button>
                     <a href="{{ route('dashboard.index') }}">
                         <button type="button" class="border px-4 py-1 rounded mt-2 bg-slate-50 hover:shadow"
                             form="invoice-item">Cancel</button>
                     </a>
                 </li>
                 <li>
+                    <button class="border px-3 py-1 rounded mt-2 bg-slate-100 hover:shadow" id="print">Print</button>
                     <a href="#payment">
                         <button class="border px-3 py-1 rounded mt-2 bg-slate-300 hover:shadow">Create
                             Payment</button>
@@ -207,4 +220,5 @@
 @push('scripts')
     @vite('resources/js/invoice/invoice-create.js')
     @vite('resources/js/invoice/invoice-edit.js')
+    @vite('resources/js/print.js')
 @endpush

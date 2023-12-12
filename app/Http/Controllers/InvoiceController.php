@@ -84,7 +84,12 @@ class InvoiceController extends Controller
         $customers = User::all();
         $users = User::get();
 
-        return view('invoices.invoice-edit', compact('invoice', 'invoices', 'users', 'customers'));
+        $total = $invoice->items->sum('subtotal');
+        $discount = $total * $invoice->total->discount / 100;
+        $discountedPrice = $total - $discount;
+
+
+        return view('invoices.invoice-edit', compact('invoice', 'invoices', 'users', 'customers', 'discountedPrice'));
     }
 
     /**
@@ -161,20 +166,21 @@ class InvoiceController extends Controller
             // }
 
             $vat = $grandPrice * 0.12;
-            $grandPriceWithVat = $vat + $grandPrice;
             $discount = $grandPrice * intval($request->discount) / 100;
-            $grandPrice = $grandPriceWithVat - $discount;
+
+            $grandPrice = ($grandPrice - $discount);
+            $grandPriceWithVat = ($grandPrice * 0.12) + $grandPrice;
 
             if (!$invoiceTotal) {
                 InvoiceTotal::create([
                     'invoice_id' => $id,
-                    'grand_price' => $grandPrice,
+                    'grand_price' => $grandPriceWithVat,
                     'discount' => intval($request->discount),
                     'vat' => $vat,
                 ]);
             } else {
                 $invoiceTotal->update([
-                    'grand_price' => $grandPrice,
+                    'grand_price' => $grandPriceWithVat,
                     'discount' => intval($request->discount),
                     'vat' => $vat,
                 ]);
