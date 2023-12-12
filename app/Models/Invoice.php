@@ -7,36 +7,29 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 
 class Invoice extends Model
 {
     use HasFactory;
-
-    protected $table = 'invoice';
     protected $fillable = ['invoice_number', 'invoice_date', 'customer_id'];
 
-    public function storeInvoice(Request $request)
-    {
-        $uuid = Str::uuid()->toString();
-
-        $this->fill([
-            'invoice_number' => $uuid,
-            'invoice_date' => now(),
-            'customer_id' => $request->input('customer_id')
-        ]);
-
-        return $this->save();
-    }
-
-    public function getOneInvoice($id): Invoice
-    {
-        return $this->find($id);
-    }
+    public $timestamps = true;
 
     public function customer()
     {
         return $this->hasOne(User::class, 'id', 'customer_id');
+    }
+
+    public function items()
+    {
+        return $this->hasMany(InvoiceItem::class, 'invoice_id', 'id');
+    }
+
+    public function total()
+    {
+        return $this->hasOne(InvoiceTotal::class, 'invoice_id', 'id');
     }
 }

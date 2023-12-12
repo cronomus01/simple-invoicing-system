@@ -1,17 +1,19 @@
 <div>
     @switch($type)
         @case('content-nav')
-            <nav class="flex justify-between">
-                <ul>
+            <nav>
+                <ul class="flex justify-between">
                     <li>
-                        <a href="Home"></a>
+                        <a href="{{ route('dashboard.index') }}">Dashboard</a>
+                    </li>
+                    <li>
+                        <form method="POST" action={{ route('logout') }}>
+                            @method('POST')
+                            @csrf
+                            <button type="submit" class="underline text-blue-400">Logout</button>
+                        </form>
                     </li>
                 </ul>
-                <form method="POST" action={{ route('logout') }}>
-                    @method('POST')
-                    @csrf
-                    <button type="submit" class="underline text-blue-400">Logout</button>
-                </form>
             </nav>
         @break
 

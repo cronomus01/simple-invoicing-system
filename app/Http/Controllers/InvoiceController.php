@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\InvoiceItem;
+use App\Models\InvoiceTotal;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Invoice;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class InvoiceController extends Controller
@@ -41,7 +44,21 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
-        $this->invoice->storeInvoice($request);
+        try {
+            DB::beginTransaction(); //Start transaction
+
+            Invoice::create([
+                'invoice_number' => $request->invoice,
+                'invoice_date' => now(),
+                'customer_id' => intval($request->customer_id)
+            ]);
+
+            DB::commit(); //Save changes
+
+        } catch (\Exception $e) {
+            report($e);
+            DB::rollBack();
+        }
 
         return redirect('dashboard');
     }
@@ -60,7 +77,7 @@ class InvoiceController extends Controller
      */
     public function edit(string $id)
     {
-        $invoice = $this->invoice->getOneInvoice($id);
+        $invoice = Invoice::find($id);
         $invoices = Invoice::all();
         $customers = User::all();
         $users = User::get();
@@ -73,20 +90,90 @@ class InvoiceController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $grandPrice = 0;
 
-        $invoice = Invoice::find($id);
-
-        if ($invoice) {
-            $invoice->update([
-                'type' => $request->type,
-                'product_service' => $request->product_service,
-                'quantity' => $request->quantity,
-                'base_price' => $request->base_price,
-                'subtotal' => $request->base_price * $request->quantity,
+        try {
+            DB::beginTransaction();
+            // Update invoice customer
+            Invoice::where('id', $id)->update([
+                'customer_id' => $request->customer_id
             ]);
+
+            Db::commit();
+        } catch (\Exception $e) {
+
+            report($e);
+
+            DB::rollBack(); // <= Rollback in case of an exception
         }
 
-        return redirect('/invoices');
+        if (is_array($request->type)) {
+
+            foreach ($request->type as $key => $value) {
+
+                try {
+                    DB::beginTransaction(); // <= Starting the transaction
+
+                    $grandPrice += intval($request->quantity[$key]) * intval($request->base_price[$key]);
+
+                    $invoiceItem = InvoiceItem::where('id', intval($request->invoice_item[$key]))->first();
+
+                    if (!$invoiceItem) {
+                        // Insert a new invoice item
+                        InvoiceItem::create([
+                            'invoice_id' => $id,
+                            'type' => $value,
+                            'product_service' => $request->product_service[$key],
+                            'quantity' => intval($request->quantity[$key]),
+                            'base_price' => intval($request->base_price[$key]),
+                            'subtotal' => intval($request->quantity[$key]) * intval($request->base_price[$key]),
+                        ]);
+                    } else {
+                        $invoiceItem->update([
+                            'invoice_id' => $id,
+                            'type' => $value,
+                            'product_service' => $request->product_service[$key],
+                            'quantity' => intval($request->quantity[$key]),
+                            'base_price' => intval($request->base_price[$key]),
+                            'subtotal' => intval($request->quantity[$key]) * intval($request->base_price[$key]),
+                        ]);
+                    }
+
+                    DB::commit(); // <= Commit the changes
+                } catch (\Exception $e) {
+                    report($e);
+                    DB::rollBack(); // <= Rollback in case of an exception
+                }
+
+
+            }
+        }
+
+        try {
+            DB::beginTransaction();
+            // Update invoice customer
+            $invoiceTotal = InvoiceTotal::where('invoice_id', $id)->first();
+
+            if (!$invoiceTotal) {
+                InvoiceTotal::create([
+                    'invoice_id' => $id,
+                    'grand_price' => $grandPrice
+                ]);
+            } else {
+                $invoiceTotal->update([
+                    'grand_price' => $grandPrice
+                ]);
+            }
+
+            Db::commit();
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+            report($e);
+
+            DB::rollBack(); // <= Rollback in case of an exception
+        }
+
+        return redirect()->route('invoice.edit', ['invoice' => $id]);
     }
 
     /**

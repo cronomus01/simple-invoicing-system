@@ -10,9 +10,9 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('invoice_total', function (Blueprint $table) {
+        Schema::create('invoice_totals', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('invoice_id')->constrained('invoice');
+            $table->foreignId('invoice_id')->constrained('invoices');
             $table->integer('discount')->nullable();
             $table->integer('vat')->nullable();
             $table->integer('grand_price');

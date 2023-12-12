@@ -23,16 +23,16 @@
         <div>
             <label for="" class="block">
                 <span class="font-bold">Email:</span>
-                <input type="text" class="border py-1 px-2 rounded" id="customer-input-email"
-                    value="{{ isset($invoice->customer->name) ? $invoice->customer->email : 'N/A' }}"
-                    class="pointer-events-none">
+                <input type="text" class="border py-1 px-2 rounded customer-input-email" id="customer-input-email"
+                    value="{{ isset($invoice->customer->name) ? $invoice->customer->email : '' }}"
+                    class="pointer-events-none" placeholder="Customer email">
             </label>
         </div>
         <x-customer-list :customers="$customers" />
         <div>
             <button type="submit" class="border bg-slate-50 px-2 py-1 rounded">Create</button>
             <a href="{{ route('dashboard.index') }}">
-                <button type="submit" class="border  px-2 py-1 rounded">Cancel</button>
+                <button type="button" class="border  px-2 py-1 rounded">Cancel</button>
             </a>
         </div>
     </form>
