@@ -4,13 +4,14 @@
             <nav>
                 <ul class="flex justify-between">
                     <li>
-                        <a href="{{ route('dashboard.index') }}">Dashboard</a>
+                        {{-- {{  }} --}}
+                        {{ ucwords(Str::replace('/', ' / ', Str::replaceFirst('/', '', Str::replace(Request::root(), '', Request::url())))) }}
                     </li>
                     <li>
                         <form method="POST" action={{ route('logout') }}>
                             @method('POST')
                             @csrf
-                            <button type="submit" class="underline text-blue-400">Logout</button>
+                            <button type="submit" class="text-blue-400">Logout</button>
                         </form>
                     </li>
                 </ul>

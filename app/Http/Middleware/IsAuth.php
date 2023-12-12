@@ -17,10 +17,10 @@ class IsAuth
      */
     public function handle(Request $request, Closure $next): Response|Redirect
     {
-        if (!Auth::check()) {
-            return redirect()->route('login.index');
+        if (Auth::check()) {
+            return $next($request);
         }
 
-        return $next($request);
+        return redirect()->route('login.index');
     }
 }

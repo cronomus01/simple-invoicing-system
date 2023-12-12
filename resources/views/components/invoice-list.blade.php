@@ -1,4 +1,4 @@
-<div class="mt-2">
+<div>
     <ul class="space-y-2">
         @isset($invoices)
             @foreach ($invoices as $invoice)
@@ -6,7 +6,7 @@
                     <a href={{ route('invoice.edit', ['invoice' => $invoice->id]) }}>
                         <h2>Invoice: <span class="uppercase">{{ Str::limit($invoice->invoice_number, '8', '') }}</span></h2>
                         <p>Customer: {{ isset($invoice->customer->name) ? $invoice->customer->name : 'N/A' }}</p>
-                        <p>Date: {{ $invoice->invoice_date }}</p>
+                        <p>Date: {{ isset($invoice) ? date('F d, Y', strtotime($invoice->invoice_date)) : '' }}</p>
                     </a>
                 </li>
             @endforeach

@@ -36,7 +36,9 @@ class InvoiceController extends Controller
         $invoice_number = Str::uuid();
         $customers = User::all();
         $invoices = Invoice::all();
-        return view('invoices.invoice-create', compact('invoice_number', 'customers', 'invoices'));
+        $invoice = Invoice::first();
+
+        return view('invoices.invoice-create', compact('invoice_number', 'customers', 'invoices', 'invoice'));
     }
 
     /**

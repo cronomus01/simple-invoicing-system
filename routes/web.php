@@ -27,8 +27,8 @@ Route::get('/', function () {
     return redirect()->route('login.index');
 });
 
-Route::middleware([RedirectIfAuthenticated::class])->resource('/login', LoginController::class);
-Route::middleware([IsAuth::class])->resource('/dashboard', DashboardController::class);
-Route::middleware([IsAuth::class])->resource('/invoice', InvoiceController::class);
+Route::resource('/login', LoginController::class)->middleware('guest');
+Route::resource('/dashboard', DashboardController::class)->middleware('auth');
+Route::resource('/invoice', InvoiceController::class)->middleware('auth');
 
 require __DIR__ . '/auth.php';

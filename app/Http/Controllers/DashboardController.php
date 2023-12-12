@@ -13,7 +13,8 @@ class DashboardController extends Controller
     public function index()
     {
         $invoices = Invoice::all();
-        return view('dashboard', compact('invoices'));
+        $invoice = Invoice::first();
+        return view('dashboard', compact('invoices', 'invoice'));
     }
 
     /**

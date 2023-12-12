@@ -11,19 +11,41 @@
     @vite('resources/css/app.css')
 </head>
 
-<body class="grid grid-cols-desktop gap-3 p-3 bg-slate-50 relative">
+<body class="grid grid-cols-desktop gap-3 p-3 bg-slate-50 relative h-full">
     <aside>
         <div>
             <x-nav type="aside-nav" />
             <x-search-invoice />
-            <x-invoice-list :invoices="$invoices" />
+            <nav class="mt-4">
+                <ul class="space-y-2">
+                    <li>
+                        <a href="{{ route('dashboard.index') }}"
+                            class="{{ Str::replace('/', ' / ', Str::replaceFirst('/', '', Str::replace(Request::root(), '', Request::url()))) ==
+                            'dashboard'
+                                ? 'border block px-2 py-1  bg-slate-100 '
+                                : 'border block px-2 py-1 bg-white hover:bg-slate-100' }}">Dashboard</a>
+                    </li>
+                    <li>
+                        @isset($invoice->id)
+                            @if ($invoice->id)
+                                <a href="{{ route('invoice.edit', ['invoice' => $invoice->id]) }}"
+                                    class="{{ Str::replace('/', ' / ', Str::replaceFirst('/', '', Str::replace(Request::root(), '', Request::url()))) ==
+                                    'invoice / ' . $invoice->id . ' / edit'
+                                        ? 'border block px-2 py-1  bg-slate-100 '
+                                        : 'border block px-2 py-1 bg-white hover:bg-slate-100' }}">Invoices</a>
+                            @else
+                                <a href="{{ route('invoice.index') }}" class="border block px-2 py-1">Invoices</a>
+                            @endif
+                        @endisset
+                    </li>
+                </ul>
+            </nav>
+            {{-- <x-invoice-list :invoices="$invoices" /> --}}
         </div>
     </aside>
-    <main>
+    <main class="h-full pb-5">
         <x-nav type="content-nav" />
-        <section>
-            @yield('content')
-        </section>
+        @yield('content')
     </main>
 </body>
 
