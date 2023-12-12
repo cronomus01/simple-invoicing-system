@@ -19,16 +19,16 @@ function clickButton(button, name, callback) {
 function openModal() {
     if(modal.classList.contains('hidden')){
         modal.classList.remove('hidden')
-        modal.classList.add('block')
+        modal.classList.add('flex')
     } else {
-        modal.classList.remove('block')
+        modal.classList.remove('flex')
         modal.classList.add('hidden')
     }
 }
 
 function closeModal() {
-    if(modal.classList.contains('block')){
-        modal.classList.remove('block')
+    if(modal.classList.contains('flex')){
+        modal.classList.remove('flex')
         modal.classList.add('hidden')
     }
 }

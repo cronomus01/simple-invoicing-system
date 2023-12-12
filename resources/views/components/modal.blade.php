@@ -1,4 +1,4 @@
-<div id={{ $id }} class="absolute inset-0 flex items-center justify-center h-screen hidden">
+<div id={{ $id }} class="absolute inset-0 hidden items-center justify-center h-screen">
     <!-- When there is no desire, all things are at peace. - Laozi -->
     <div class="w-2/4 z-10 bg-white p-5 shadow-lg rounded-lg space-y-2">
         {{ $slot }}
