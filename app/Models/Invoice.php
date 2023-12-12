@@ -30,11 +30,6 @@ class Invoice extends Model
         return $this->save();
     }
 
-    public function getInvoices(): Collection
-    {
-        return $this->get();
-    }
-
     public function getOneInvoice($id): Invoice
     {
         return $this->find($id);

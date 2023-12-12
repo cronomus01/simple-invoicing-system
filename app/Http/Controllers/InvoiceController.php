@@ -31,7 +31,7 @@ class InvoiceController extends Controller
     {
 
         $invoice_number = Str::uuid();
-        $customers = User::get()->all();
+        $customers = User::all();
         $invoices = Invoice::all();
         return view('invoices.invoice-create', compact('invoice_number', 'customers', 'invoices'));
     }
@@ -61,10 +61,11 @@ class InvoiceController extends Controller
     public function edit(string $id)
     {
         $invoice = $this->invoice->getOneInvoice($id);
-        $invoices = $this->invoice->getInvoices();
+        $invoices = Invoice::all();
+        $customers = User::all();
         $users = User::get();
 
-        return view('invoices.invoice-edit', compact('invoice', 'invoices', 'users'));
+        return view('invoices.invoice-edit', compact('invoice', 'invoices', 'users', 'customers'));
     }
 
     /**

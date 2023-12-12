@@ -11,7 +11,7 @@
     @vite('resources/css/app.css')
 </head>
 
-<body class="grid grid-cols-desktop gap-3 p-3 bg-slate-50">
+<body class="grid grid-cols-desktop gap-3 p-3 bg-slate-50 relative">
     <aside>
         <div>
             <x-nav type="aside-nav" />

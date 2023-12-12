@@ -6,6 +6,7 @@
         <form action={{ route('invoice.store') }} method="POST" class="border bg-white px-4 py-6" id="invoice-item">
             @method('PUT')
             @csrf
+            <input type="hidden" value="" name="customer_id" id="customer-input-id">
             <fieldset class="flex gap-5">
                 <section class="basis-full">
                     <h1 class="text-lg font-bold">Logo</h1>
@@ -30,14 +31,29 @@
                 </section>
             </fieldset>
             {{-- Customer --}}
-            <fieldset class="mt-2 gap-5">
+            <fieldset class="mt-2 gap-5 relative max-w-fit">
                 <h1 class="text-lg font-bold">Customer</h1>
-                <h2>Name: {{ isset($invoice->customer->name) ? $invoice->customer->name : 'N/A' }}</h2>
-                <p>Email: {{ isset($invoice->customer) ? $invoice->customer->email : 'N/A' }}</p>
+                <label for="" class="block">Name:
+                    <input type="text" id="customer-input"
+                        value="{{ isset($invoice->customer->name) ? $invoice->customer->name : 'N/A' }}"
+                        class="pointer-events-none customer-input">
+                </label>
+                <label for="" class="block">Email:
+                    <input type="text" id="customer-input-email"
+                        value="{{ isset($invoice->customer->name) ? $invoice->customer->email : 'N/A' }}"
+                        class="pointer-events-none customer-input-email">
+                </label>
+                <menu class="absolute top-[0.2em] right-[-2em]">
+                    <li>
+                        <button type="button" id="edit-button">
+                            <figure><img src="{{ asset('assets/icons/icons8-edit-96.png') }}" alt="edit icon"
+                                    class="w-6"></figure>
+                        </button>
+                    </li>
+                </menu>
             </fieldset>
             {{-- Items --}}
             <fieldset class="mt-2 gap-5">
-                <h1 class="text-lg font-bold">Invoices</h1>
                 <div class="relative overflow-x-auto">
                     <table class="w-full text-sm text-left rtl:text-right border">
                         <thead class="text-xs uppercase   ">
@@ -92,9 +108,25 @@
             <button type="button" class="border px-3 py-1 rounded-sm mt-2 bg-slate-100" form="invoice-item">Cancel</button>
         </a>
     </section>
+    <section>
+        <x-modal id="modal">
+            <label for="" class="block">Name:
+                <input type="text" id="customer-input"
+                    value="{{ isset($invoice->customer->name) ? $invoice->customer->name : 'N/A' }}"
+                    class="pointer-events-none customer-input">
+            </label>
+            <label for="" class="block">Email:
+                <input type="text" id="customer-input-email"
+                    value="{{ isset($invoice->customer->name) ? $invoice->customer->email : 'N/A' }}"
+                    class="pointer-events-none customer-input-email">
+            </label>
+            <x-customer-list :customers="$customers" />
+        </x-modal>
+    </section>
 @endsection
 
 
 @push('scripts')
-    {{-- @vite('resources/js/edit-invoice.js') --}}
+    @vite('resources/js/invoice/invoice-create.js')
+    @vite('resources/js/invoice/invoice-edit.js')
 @endpush

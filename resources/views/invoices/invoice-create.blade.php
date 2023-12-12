@@ -14,23 +14,21 @@
                 class="pointer-events-none uppercase" id="customer" name="invoice">
         </div>
         <div>
-            <label for="customer" class="font-bold">
-                Customer:
+            <label for="customer">
+                <span class="font-bold">Customer:</span>
+                <input type="customer" class="border py-1 px-2 rounded customer-input" placeholder="Enter customer name"
+                    id="customer-input" name="customer">
             </label>
-            <input type="customer" class="border py-1 px-2 rounded" placeholder="Enter customer name" id="customer-input"
-                name="customer">
         </div>
-        <div class="overflow-y-auto h-96 pr-2">
-            @isset($customers)
-                <ul id="customer-list">
-                    @foreach ($customers as $customer)
-                        <li class="border mt-1 px-2 py-1 rounded hover:bg-slate-50 cursor-pointer"
-                            data-id="{{ $customer->id }}">{{ $customer->name }}
-                        </li>
-                    @endforeach
-                </ul>
-            @endisset
+        <div>
+            <label for="" class="block">
+                <span class="font-bold">Email:</span>
+                <input type="text" class="border py-1 px-2 rounded" id="customer-input-email"
+                    value="{{ isset($invoice->customer->name) ? $invoice->customer->email : 'N/A' }}"
+                    class="pointer-events-none">
+            </label>
         </div>
+        <x-customer-list :customers="$customers" />
         <div>
             <button type="submit" class="border bg-slate-50 px-2 py-1 rounded">Create</button>
             <a href="{{ route('dashboard.index') }}">
