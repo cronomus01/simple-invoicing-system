@@ -162,7 +162,7 @@ class InvoiceController extends Controller
 
             $vat = $grandPrice * 0.12;
             $grandPriceWithVat = $vat + $grandPrice;
-            $discount = $grandPriceWithVat * intval($request->discount) / 100;
+            $discount = $grandPrice * intval($request->discount) / 100;
             $grandPrice = $grandPriceWithVat - $discount;
 
             if (!$invoiceTotal) {
