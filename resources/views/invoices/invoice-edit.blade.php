@@ -151,7 +151,7 @@
                                     Vat
                                 </td>
                                 <td class="px-2 text-right">
-                                    {{ isset($invoice->total) ? intval($invoice->total->vat) : 0 }}%
+                                    P{{ isset($invoice->total) ? $invoice->total->vat : 0 }}
                                 </td>
                             </tr>
                             <tr class="border-b bg-slate-50">

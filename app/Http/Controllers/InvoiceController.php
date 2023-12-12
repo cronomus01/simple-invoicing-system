@@ -160,24 +160,23 @@ class InvoiceController extends Controller
             //     throw new \ErrorException('discount is null');
             // }
 
-            $vat = ($grandPrice * 0.12);
+            $vat = $grandPrice * 0.12;
             $grandPriceWithVat = $vat + $grandPrice;
             $discount = $grandPriceWithVat * intval($request->discount) / 100;
             $grandPrice = $grandPriceWithVat - $discount;
-
 
             if (!$invoiceTotal) {
                 InvoiceTotal::create([
                     'invoice_id' => $id,
                     'grand_price' => $grandPrice,
                     'discount' => intval($request->discount),
-                    'vat' => 12,
+                    'vat' => $vat,
                 ]);
             } else {
                 $invoiceTotal->update([
                     'grand_price' => $grandPrice,
                     'discount' => intval($request->discount),
-                    'vat' => 12,
+                    'vat' => $vat,
                 ]);
             }
 
