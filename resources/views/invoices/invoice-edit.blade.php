@@ -91,8 +91,8 @@
                                                 value="{{ $item->product_service }}">
                                         </td>
                                         <td class="p-3">
-                                            <input type="number" class="w-full h-full quantity" value={{ $item->quantity }}
-                                                name="quantity[]">
+                                            <input type="number" min="0" class="w-full h-full quantity"
+                                                value={{ $item->quantity }} name="quantity[]">
                                         </td>
                                         <td class="p-3">
                                             <input type="text" class="w-full h-full base-price" name="base_price[]"
@@ -114,23 +114,32 @@
                 </div>
             </fieldset>
             <fieldset class="mt-2">
-                <h1 class="font-bold text-lg">Total</h1>
+                <h1 class="font-bold text-lg mb-3">Payment</h1>
                 <table class="w-[20rem] text-sm text-left rtl:text-right border">
                     <thead class="text-xs uppercase">
+                        <tr>
+                            <th scope="col" class="px-6 py-3 border">
+                                Total
+                            </th>
+                            <th class="border px-2">
+                                P{{ $invoice->items->sum('subtotal') }}
+                            </th>
+                        </tr>
                         <tr>
                             <th scope="col" class="px-6 py-3 border">
                                 Discount
                             </th>
                             <th class="border">
-                                <input type="text" class="w-full h-full" name="discount">
+                                <input type="text" class="w-full h-full px-2" name="discount"
+                                    value="{{ isset($invoice->total) ? intval($invoice->total->discount) : 0 }}% ">
                             </th>
                         </tr>
                         <tr>
                             <th scope="col" class="px-6 py-3 border">
                                 Vat
                             </th>
-                            <th class="border">
-                                <input type="text" class="w-full h-full" name="var">
+                            <th class="border px-2">
+                                {{ isset($invoice->total) ? intval($invoice->total->vat) : 0 }}%
                             </th>
                         </tr>
                         <tr>
@@ -138,7 +147,7 @@
                                 Grand Price
                             </th>
                             <th class="border px-2">
-                                P{{ $invoice->total->grand_price }}
+                                P{{ isset($invoice->total) ? $invoice->total->grand_price : 0 }}
                             </th>
                         </tr>
                     </thead>

@@ -13,9 +13,9 @@ return new class extends Migration {
         Schema::create('invoice_totals', function (Blueprint $table) {
             $table->id();
             $table->foreignId('invoice_id')->constrained('invoices');
-            $table->integer('discount')->nullable();
-            $table->integer('vat')->nullable();
-            $table->integer('grand_price');
+            $table->decimal('discount')->nullable();
+            $table->decimal('vat')->nullable();
+            $table->decimal('grand_price');
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('invoice_total');
+        Schema::dropIfExists('invoice_totals');
     }
 };

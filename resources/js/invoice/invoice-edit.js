@@ -46,7 +46,7 @@ function addTableRow() {
                 <input type="text" class="w-full h-full" name="product_service[]">
             </td>
             <td class="p-3">
-                <input type="number" class="w-full h-full quantity" value="0" name="quantity[]">
+                <input type="number" min="0" class="w-full h-full quantity" value="0" name="quantity[]">
             </td>
             <td class="p-3">
                 <input type="text" class="w-full h-full base-price" name="base_price[]">
@@ -94,15 +94,15 @@ function quantityChange() {
 
         quantity.forEach(input => {
            input.addEventListener("change", (e) => {
-            if(!isNaN(e.target.value)) {
-                console.log('test');
-                const subtotalInput = e.target.parentElement.nextElementSibling.nextElementSibling.firstElementChild;
-                const basePrice = e.target.parentElement.nextElementSibling.firstElementChild;
+                if(!isNaN(e.target.value) && e.target.value > 0) {
+                    console.log('test');
+                    const subtotalInput = e.target.parentElement.nextElementSibling.nextElementSibling.firstElementChild;
+                    const basePrice = e.target.parentElement.nextElementSibling.firstElementChild;
 
-                let subtotal = basePrice.value * e.target.value;
-                subtotalInput.value = subtotal;
-                console.log(subtotal);
-            }
+                    let subtotal = basePrice.value * e.target.value;
+                    subtotalInput.value = subtotal;
+                    console.log(subtotal);
+                }
             })
         })
     } catch(err) {

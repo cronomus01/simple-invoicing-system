@@ -154,16 +154,32 @@ class InvoiceController extends Controller
             // Update invoice customer
             $invoiceTotal = InvoiceTotal::where('invoice_id', $id)->first();
 
+            // if (!$request->discount == '') {
+            //     throw new \ErrorException('discount is null');
+            // }
+
+            $vat = ($grandPrice * 0.12);
+            $grandPriceWithVat = $vat + $grandPrice;
+            $discount = $grandPriceWithVat * intval($request->discount) / 100;
+            $grandPrice = $grandPriceWithVat - $discount;
+
+
             if (!$invoiceTotal) {
                 InvoiceTotal::create([
                     'invoice_id' => $id,
-                    'grand_price' => $grandPrice
+                    'grand_price' => $grandPrice,
+                    'discount' => intval($request->discount),
+                    'vat' => 12,
                 ]);
             } else {
                 $invoiceTotal->update([
-                    'grand_price' => $grandPrice
+                    'grand_price' => $grandPrice,
+                    'discount' => intval($request->discount),
+                    'vat' => 12,
                 ]);
             }
+
+
 
             Db::commit();
         } catch (\Exception $e) {
