@@ -150,8 +150,8 @@
                                 <td class="py-1 text-right font-bold">
                                     Discount
                                 </td>
-                                <td class="flex items-center justify-end">
-                                    <input type="text" class="pl-2 text-right" name="discount"
+                                <td class="flex items-center justify-end pr-2">
+                                    <input type="text" class="text-right" name="discount"
                                         value="{{ $invoice->items->sum('subtotal') == $discountedPrice ? '' : 'P' . number_format($discountedPrice, 2) }} ({{ $invoice->total ? intval($invoice->total->discount) : 0 }}%) " />
                                 </td>
                             </tr>
@@ -210,7 +210,7 @@
             <x-customer-list :customers="$customers" />
         </x-modal>
     </section>
-    <x-print-invoice :invoice="$invoice" discountedPrice="{{ $discountedPrice }}" :hidden="true" />
+    <x-print-invoice :invoice="$invoice" discountedPrice="{{ $discountedPrice }}" :hidden="true" :payment="false" />
 @endsection
 
 

@@ -23,7 +23,9 @@
                             class="{{ Str::replace('/', ' / ', Str::replaceFirst('/', '', Str::replace(Request::root(), '', Request::url()))) ==
                             'dashboard'
                                 ? 'border block px-2 py-1  bg-slate-100 '
-                                : 'border block px-2 py-1 bg-white hover:bg-slate-100' }}">Dashboard</a>
+                                : 'border block px-2 py-1 bg-white hover:bg-slate-100' }}">
+                            <span>Dashboard</span>
+                        </a>
                     </li>
                     <li>
                         @isset($invoice->id)
@@ -32,9 +34,9 @@
                                     class="{{ Str::replace('/', ' / ', Str::replaceFirst('/', '', Str::replace(Request::root(), '', Request::url()))) ==
                                     'invoice / ' . $invoice->id . ' / edit'
                                         ? 'border block px-2 py-1  bg-slate-100 '
-                                        : 'border block px-2 py-1 bg-white hover:bg-slate-100' }}">Invoices</a>
-                            @else
-                                <a href="{{ route('invoice.index') }}" class="border block px-2 py-1">Invoices</a>
+                                        : 'border block px-2 py-1 bg-white hover:bg-slate-100' }}">
+                                    <span>Invoices</span>
+                                </a>
                             @endif
                         @endisset
                     </li>
@@ -45,9 +47,9 @@
                                     class="{{ Str::replace('/', ' / ', Str::replaceFirst('/', '', Str::replace(Request::root(), '', Request::url()))) ==
                                     'payment / ' . $payment->id
                                         ? 'border block px-2 py-1  bg-slate-100 '
-                                        : 'border block px-2 py-1 bg-white hover:bg-slate-100' }}">Payments</a>
-                            @else
-                                <a href="{{ route('invoice.index') }}" class="border block px-2 py-1">Invoices</a>
+                                        : 'border block px-2 py-1 bg-white hover:bg-slate-100' }}">
+                                    <span>Payments</span>
+                                </a>
                             @endif
                         @endisset
                     </li>

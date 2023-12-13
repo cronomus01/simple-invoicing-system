@@ -1,7 +1,7 @@
 @extends('layout.base')
 
 @section('content')
-    <div class="flex gap-5 items-start">
+    <div class="flex gap-5 items-start pr-2">
         @isset($invoice)
             <form action="{{ route('payment.store', ['payment' => $invoice->id]) }}" method="POST"
                 class="mt-5 border p-5 bg-white w-[40%]">
@@ -35,7 +35,7 @@
 
                                 </td>
                                 <td class="text-right">
-                                    <input type="radio" name="payment_type" value="credit-card" id="cash">
+                                    <input type="radio" name="payment_type" value="cash" id="cash">
                                 </td>
                             </tr>
                             <tr>
@@ -45,7 +45,7 @@
                                     </label>
                                 </td>
                                 <td class="text-right">
-                                    <input type="radio" name="payment_type" value="credit-card" id="check">
+                                    <input type="radio" name="payment_type" value="check" id="check">
                                 </td>
                             </tr>
                             <tr>
@@ -67,12 +67,12 @@
 
                                 </td>
                                 <td class="text-right">
-                                    <input type="radio" name="payment_type" value="credit-card" id="bank-transfer">
+                                    <input type="radio" name="payment_type" value="bank-transfer" id="bank-transfer">
                                 </td>
                             </tr>
                             <tr>
                                 <td class="pr-10">
-                                    Cost:
+                                    Paid:
                                 </td>
                                 <td class="text-right">
                                     P{{ isset($invoice->total) ? number_format($invoice->total->grand_price, 2) : 0 }}
@@ -95,8 +95,9 @@
                 </menu>
             </form>
         @endisset
-        <section class="">
-            <x-print-invoice :invoice="$invoice" discountedPrice="{{ $discountedPrice }}" :hidden="false" />
+        <section class="mt-5">
+            <x-invoice-preview :invoice="$invoice" discountedPrice="{{ $discountedPrice }}" :hidden="false"
+                :payment="true" />
         </section>
     </div>
 @endsection

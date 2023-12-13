@@ -1,5 +1,5 @@
-<div
-    class="{{ $hidden ? 'absolute inset-0 bg-white screen:p-5 print:flex flex-col justify-between screen:hidden' : 'bg-white border p-5' }}">
+<div class="{{ $hidden ? 'absolute inset-0 bg-white screen:p-5 print:flex flex-col justify-between screen:hidden' : 'bg-white border p-5 relative' }}"
+    id="print-design">
     <div>
         <section class="flex justify-between text-right items-start border-b pb-5">
             <figure class="">

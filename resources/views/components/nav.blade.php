@@ -4,8 +4,9 @@
             <nav>
                 <ul class="flex justify-between">
                     <li>
-                        {{-- {{  }} --}}
-                        {{ ucwords(Str::replace('/', ' / ', Str::replaceFirst('/', '', Str::replace(Request::root(), '', Request::url())))) }}
+                        <p class="text-gray-500 font-semibold">
+                            {{ ucwords(Str::replace('/', ' / ', Str::replaceFirst('/', '', Str::replace(Request::root(), '', Request::url())))) }}
+                        </p>
                     </li>
                     <li>
                         <form method="POST" action={{ route('logout') }}>

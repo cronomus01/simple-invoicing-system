@@ -12,6 +12,7 @@
                                 class="uppercase">#{{ Str::limit($payment->payment_record_number, '8', '') }}</span></h2>
                         <p>OR No: <span class="uppercase">
                                 #{{ Str::limit($payment->or_number, '8', '') }}</span></p>
+                        <p>Type: {{ ucwords(Str::replace('-', ' ', $payment->type_of_payment)) }}</p>
                         <p>Date: {{ date('F d, Y', strtotime($payment->payment_date)) }}</p>
                     </a>
                 </li>

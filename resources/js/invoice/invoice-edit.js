@@ -109,10 +109,14 @@ function quantityChange() {
     }
 }
 
-clickButton(clickButtonEl, 'edit-button', openModal)
-clickButton(cancelButtonEl, 'cancel', closeModal)
-clickButton(saveButtonEl, 'save', closeModal)
-clickButton(addItemBtn, 'add-item-btn', addTableRow)
+console.log()
+
+if(location.pathname.includes('edit') && location.pathname.includes('invoice')){
+    clickButton(clickButtonEl, 'edit-button', openModal)
+    clickButton(cancelButtonEl, 'cancel', closeModal)
+    clickButton(saveButtonEl, 'save', closeModal)
+    clickButton(addItemBtn, 'add-item-btn', addTableRow)
+}
 
 
 document.addEventListener('change', () => {

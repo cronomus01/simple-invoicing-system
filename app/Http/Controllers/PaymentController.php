@@ -78,7 +78,16 @@ class PaymentController extends Controller
         $payments = Payment::all();
         $payment = Payment::find($id);
 
-        return view('payment.payment-show', compact('invoice', 'payments', 'payment'));
+        $discount = 0;
+        $total = $invoice->items->sum('subtotal');
+
+        if ($invoice->total) {
+            $discount = $total * $invoice->total->discount / 100;
+        }
+
+        $discountedPrice = $total - $discount;
+
+        return view('payment.payment-show', compact('invoice', 'payments', 'payment', 'discountedPrice'));
     }
 
     /**
