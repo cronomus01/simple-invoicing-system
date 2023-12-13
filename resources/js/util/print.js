@@ -1,5 +1,5 @@
 
-import { clickButton } from "./invoice/invoice-edit.js";
+import { clickButton } from "../invoice/invoice-edit.js";
 
 const print = document.getElementById('print');
 

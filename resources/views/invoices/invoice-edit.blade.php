@@ -218,5 +218,5 @@
 @push('scripts')
     @vite('resources/js/invoice/invoice-create.js')
     @vite('resources/js/invoice/invoice-edit.js')
-    @vite('resources/js/print.js')
+    @vite('resources/js/util/print.js')
 @endpush

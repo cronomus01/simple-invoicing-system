@@ -8,9 +8,10 @@ export default defineConfig({
             input: [
                 'resources/css/app.css',
                 'resources/js/app.js',
-                ...glob.sync('resources/js/invoice/*.js')
+                ...glob.sync('resources/js/invoice/*.js'),
+                ...glob.sync('resources/js/util/*.js')
             ],
             refresh: true,
-        }),
+    }),
     ],
 });
