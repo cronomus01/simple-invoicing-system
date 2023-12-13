@@ -2,17 +2,17 @@
 
 namespace App\View\Components;
 
-use App\Models\Invoice;
 use Closure;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\View\Component;
 
-class PrintInvoice extends Component
+class PaymentList extends Component
 {
     /**
      * Create a new component instance.
      */
-    public function __construct(public Invoice $invoice, public string $discountedPrice, public bool $hidden)
+    public function __construct(public Collection $payments)
     {
         //
     }
@@ -22,6 +22,6 @@ class PrintInvoice extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.print-invoice');
+        return view('components.payment-list');
     }
 }

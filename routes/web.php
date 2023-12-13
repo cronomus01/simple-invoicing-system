@@ -3,9 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\LoginController;
-use App\Http\Middleware\Authenticate;
-use App\Http\Middleware\IsAuth;
-use App\Http\Middleware\RedirectIfAuthenticated;
+use App\Http\Controllers\PaymentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,5 +28,6 @@ Route::get('/', function () {
 Route::resource('/login', LoginController::class)->middleware('guest');
 Route::resource('/dashboard', DashboardController::class)->middleware('auth');
 Route::resource('/invoice', InvoiceController::class)->middleware('auth');
+Route::resource('/payment', PaymentController::class)->middleware('auth');
 
 require __DIR__ . '/auth.php';

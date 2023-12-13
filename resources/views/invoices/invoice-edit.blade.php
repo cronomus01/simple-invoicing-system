@@ -1,4 +1,4 @@
-@extends('layout.base')
+@extends('layout.base', ['payment' => $payment])
 
 @section('content')
     <section class="grid grid-cols-desktop gap-2 pt-5 print:p-0">
@@ -187,9 +187,8 @@
                 </li>
                 <li>
                     <button class="border px-3 py-1 rounded mt-2 bg-slate-100 hover:shadow" id="print">Print</button>
-                    <a href="#payment">
-                        <button class="border px-3 py-1 rounded mt-2 bg-slate-300 hover:shadow">Create
-                            Payment</button>
+                    <a href="{{ route('payment.create', ['invoice' => $invoice->id]) }}">
+                        <button class="border px-3 py-1 rounded mt-2 bg-slate-300 hover:shadow">Create Payment</button>
                     </a>
                 </li>
             </menu>
@@ -211,7 +210,7 @@
             <x-customer-list :customers="$customers" />
         </x-modal>
     </section>
-    <x-print-invoice :invoice="$invoice" discountedPrice="{{ $discountedPrice }}" />
+    <x-print-invoice :invoice="$invoice" discountedPrice="{{ $discountedPrice }}" :hidden="true" />
 @endsection
 
 

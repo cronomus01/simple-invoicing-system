@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Invoice;
 use App\Models\Payment;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class PaymentController extends Controller
 {
@@ -21,7 +23,22 @@ class PaymentController extends Controller
      */
     public function create()
     {
+        $invoiceId = request()->get('invoice');
+        $invoices = Invoice::all();
+        $invoice = Invoice::find($invoiceId);
+        $payment = Payment::first();
 
+        $discount = 0;
+        $total = $invoice->items->sum('subtotal');
+
+        if ($invoice->total) {
+            $discount = $total * $invoice->total->discount / 100;
+        }
+
+        $discountedPrice = $total - $discount;
+        $paymentNumber = Str::uuid();
+
+        return view('payment.payment-create', compact('invoices', 'invoice', 'discountedPrice', 'paymentNumber', 'payment'));
     }
 
     /**
@@ -29,13 +46,27 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
-        $payment = new Payment;
+        $invoice = Invoice::where('id', $request->invoice_id)->first();
+        try {
+            DB::beginTransaction();
+            // Update invoice customer
+            Payment::create([
+                'type_of_payment' => $request->payment_type,
+                'invoice_id' => $request->invoice_id,
+                'payment_record_number' => $request->payment_number,
+                'payment_date' => now(),
+                'or_number' => Str::uuid(),
+                'amount_paid' => $invoice->total->grand_price,
+            ]);
 
-        $payment->type_of_payment = $request->payment;
-        $payment->invoice_id = $request->invoice_id;
-        $payment->save();
+            Db::commit();
+        } catch (\Exception $e) {
+            report($e);
 
-        return redirect('/invoices');
+            DB::rollBack(); // <= Rollback in case of an exception
+        }
+
+        return redirect()->route('dashboard.index');
     }
 
     /**
@@ -43,9 +74,11 @@ class PaymentController extends Controller
      */
     public function show(string $id)
     {
-        $invoice = Invoice::find($id);
+        $invoice = Invoice::first();
+        $payments = Payment::all();
+        $payment = Payment::find($id);
 
-        return view('payment.payment-create', ['invoice' => $invoice]);
+        return view('payment.payment-show', compact('invoice', 'payments', 'payment'));
     }
 
     /**

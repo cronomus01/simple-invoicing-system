@@ -38,6 +38,19 @@
                             @endif
                         @endisset
                     </li>
+                    <li>
+                        @isset($payment->id)
+                            @if ($payment->id)
+                                <a href="{{ route('payment.show', ['payment' => $payment->id]) }}"
+                                    class="{{ Str::replace('/', ' / ', Str::replaceFirst('/', '', Str::replace(Request::root(), '', Request::url()))) ==
+                                    'payment / ' . $payment->id
+                                        ? 'border block px-2 py-1  bg-slate-100 '
+                                        : 'border block px-2 py-1 bg-white hover:bg-slate-100' }}">Payments</a>
+                            @else
+                                <a href="{{ route('invoice.index') }}" class="border block px-2 py-1">Invoices</a>
+                            @endif
+                        @endisset
+                    </li>
                 </ul>
             </nav>
             {{-- <x-invoice-list :invoices="$invoices" /> --}}

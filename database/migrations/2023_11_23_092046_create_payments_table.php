@@ -10,14 +10,14 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::dropIfExists('payment');
+        Schema::dropIfExists('payments');
 
-        Schema::create('payment', function (Blueprint $table) {
+        Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('invoice_id')->constrained('invoice')->cascadeOnDelete();
-            $table->bigInteger('payment_record_number');
+            $table->foreignId('invoice_id')->constrained('invoices')->cascadeOnDelete();
+            $table->uuid('payment_record_number');
             $table->uuid('or_number');
-            $table->uuid('payment_date');
+            $table->date('payment_date');
             $table->integer('amount_paid');
             $table->string('type_of_payment');
             $table->timestamps();
@@ -29,6 +29,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('payment');
+        Schema::dropIfExists('payments');
     }
 };

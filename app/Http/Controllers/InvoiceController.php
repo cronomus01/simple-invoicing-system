@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\InvoiceItem;
 use App\Models\InvoiceTotal;
+use App\Models\Payment;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Invoice;
@@ -37,8 +38,9 @@ class InvoiceController extends Controller
         $customers = User::all();
         $invoices = Invoice::all();
         $invoice = Invoice::first();
+        $payment = Payment::first();
 
-        return view('invoices.invoice-create', compact('invoice_number', 'customers', 'invoices', 'invoice'));
+        return view('invoices.invoice-create', compact('invoice_number', 'customers', 'invoices', 'invoice', 'payment'));
     }
 
     /**
@@ -80,6 +82,7 @@ class InvoiceController extends Controller
     public function edit(string $id)
     {
         $invoice = Invoice::find($id);
+        $payment = Payment::first();
         $invoices = Invoice::all();
         $customers = User::all();
         $users = User::get();
@@ -94,7 +97,7 @@ class InvoiceController extends Controller
         $discountedPrice = $total - $discount;
 
 
-        return view('invoices.invoice-edit', compact('invoice', 'invoices', 'users', 'customers', 'discountedPrice'));
+        return view('invoices.invoice-edit', compact('invoice', 'invoices', 'users', 'customers', 'discountedPrice', 'payment'));
     }
 
     /**

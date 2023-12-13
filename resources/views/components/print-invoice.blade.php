@@ -1,14 +1,15 @@
-<div class="absolute inset-0 bg-white screen:p-5 print:flex flex-col justify-between screen:hidden">
+<div
+    class="{{ $hidden ? 'absolute inset-0 bg-white screen:p-5 print:flex flex-col justify-between screen:hidden' : 'bg-white border p-5 mt-5 w-[80%]' }}">
     <div>
         <section class="flex justify-between text-right items-start border-b pb-5">
             <figure class="">
                 <img src="{{ asset('assets/icons/irefrans-cosme.png') }}" alt="irefrans cosme logo"
-                    class="w-[13em] rounded-full">
+                    class="print:w-[13em] screen:w-[9em] rounded-full">
             </figure>
             <div>
-                <h1 class="uppercase text-7xl mb-3 font-serif">Invoice</h1>
-                <h1 class="uppercase text-3xl mb-2">Yuniko Inc.</h1>
-                <article class="leading-5 text-lg">
+                <h1 class="uppercase print:text-7xl screen:text-4xl mb-3 font-serif">Invoice</h1>
+                <h1 class="uppercase print:text-3xl screen:text-lg mb-2">Yuniko Inc.</h1>
+                <article class="leading-5 print:text-lg">
                     <p>460-1086, Kitazukamachi</p>
                     <p>+81 71-562-7817</p>
                     <p>hamada.mitsuru@tanabe.biz</p>
@@ -18,8 +19,8 @@
         <section>
             <div class="mt-5 flex justify-between">
                 <div>
-                    <h1 class="uppercase text-3xl mb-2">Customer</h1>
-                    <article class="leading-5 text-lg">
+                    <h1 class="uppercase print:text-3xl screen:text-xl mb-2">Customer</h1>
+                    <article class="leading-5 print:text-lg">
                         <p class="">Name:
                             {{ isset($invoice->customer->name) ? $invoice->customer->name : 'N/A' }}
                         </p>
@@ -29,8 +30,8 @@
                     </article>
                 </div>
                 <div class="text-right">
-                    <h1 class="uppercase text-3xl mb-2">Invoice</h1>
-                    <article class="leading-5 text-lg">
+                    <h1 class="uppercase print:text-3xl screen:text-xl mb-2">Invoice</h1>
+                    <article class="leading-5 print:text-lg">
                         <p class="">
                             <span>
                                 No:
@@ -48,21 +49,21 @@
             </div>
             <div class="mt-10 pb-10 border-b">
                 <table class="w-full text-left rtl:text-right">
-                    <thead class="uppercase bg-slate-100">
+                    <thead class="uppercase bg-slate-100 text-sm">
                         <tr>
-                            <th scope="col" class="px-6 py-3 print:py-2">
+                            <th scope="col" class="py-2 px-3 print:py-2">
                                 Type
                             </th>
-                            <th scope="col" class="px-6 py-3 print:py-2">
+                            <th scope="col" class="py-2 px-3 print:py-2">
                                 Product / Service
                             </th>
-                            <th scope="col" class="px-6 py-3 print:py-2">
+                            <th scope="col" class="py-2 px-3 print:py-2">
                                 Quantity
                             </th>
-                            <th scope="col" class="px-6 py-3 print:py-2">
+                            <th scope="col" class="py-2 px-3 print:py-2">
                                 Base Price
                             </th>
-                            <th scope="col" class="px-6 py-3 print:py-2">
+                            <th scope="col" class="py-2 px-3 print:py-2">
                                 Subtotal
                             </th>
                         </tr>
@@ -92,9 +93,9 @@
                     </tbody>
                 </table>
             </div>
-            <div class="flex justify-end mt-5 border-b pb-5">
+            <div class="flex justify-end mt-5">
                 <table class="text-sm text-left rtl:text-right">
-                    <tbody class="text-lg leading-6 uppercase">
+                    <tbody class="leading-6 uppercase text-sm">
                         <tr>
                             <td class="text-right font-bold pr-10">
                                 Total:
@@ -135,7 +136,8 @@
     <section class="mt-5 text-center">
         <h1>All Rights Reserved</h1>
         <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi quod voluptates rem hic qui. Totam,
-            architecto sit voluptatem sapiente nostrum ipsam beatae nam neque doloribus dicta eius amet maiores placeat.
+            architecto sit voluptatem sapiente nostrum ipsam beatae nam neque doloribus dicta eius amet maiores
+            placeat.
         </p>
     </section>
 </div>

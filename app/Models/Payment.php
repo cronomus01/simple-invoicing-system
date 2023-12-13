@@ -14,5 +14,12 @@ class Payment extends Model
         'or_number',
         'amount_paid',
         'type_of_payment',
+        'payment_record_number',
+        'payment_date'
     ];
+
+    public function invoice()
+    {
+        return $this->belongsTo(Invoice::class);
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Invoice;
+use App\Models\Payment;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -14,7 +15,9 @@ class DashboardController extends Controller
     {
         $invoices = Invoice::all();
         $invoice = Invoice::first();
-        return view('dashboard', compact('invoices', 'invoice'));
+        $payment = Payment::first();
+
+        return view('dashboard', compact('invoices', 'invoice', 'payment'));
     }
 
     /**

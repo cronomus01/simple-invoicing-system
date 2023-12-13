@@ -1,7 +1,7 @@
-@extends('layout.base')
+@extends('layout.base', ['payment' => $payment, 'invoice' => $invoice])
 
 @section('content')
-    <section class="mx-5">
+    {{-- <section class="mx-5">
         <form action={{ route('payments.store') }} method="POST" class="border px-5 py-5" id="invoice-item">
             @method('POST')
             @csrf
@@ -32,7 +32,6 @@
                     </table>
                 </section>
             </fieldset>
-            {{-- Customer --}}
             <fieldset class="mt-5 w-[28%] space-y-2">
                 <h1 class="uppercase font-bold mb-3 text-lg">Customer</h1>
                 <div class="flex justify-between">
@@ -44,7 +43,6 @@
                     <input type="text" class="border">
                 </div>
             </fieldset>
-            {{-- Items --}}
             <fieldset class="mt-5 gap-5">
                 <div class="relative overflow-x-auto text-slate-50">
                     <table class="w-full text-sm text-left rtl:text-right border">
@@ -140,5 +138,10 @@
             <button type="submit" class="border px-3 py-1 rounded-md bg-slate-200 mt-2" form="invoice-item">Update</button>
             <button type="submit" class="border px-3 py-1 rounded-md mt-2" form="invoice-item">Cancel</button>
         </div>
+    </section> --}}
+    <section class="grid grid-cols-desktop gap-2 pt-5 print:p-0">
+        <aside class="overflow-y-auto h-[90vh] pr-2">
+            <x-payment-list :payments="$payments" />
+        </aside>
     </section>
 @endsection
