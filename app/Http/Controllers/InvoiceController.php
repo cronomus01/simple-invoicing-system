@@ -84,8 +84,13 @@ class InvoiceController extends Controller
         $customers = User::all();
         $users = User::get();
 
+        $discount = 0;
         $total = $invoice->items->sum('subtotal');
-        $discount = $total * $invoice->total->discount / 100;
+
+        if ($invoice->total) {
+            $discount = $total * $invoice->total->discount / 100;
+        }
+
         $discountedPrice = $total - $discount;
 
 

@@ -14,8 +14,8 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('invoice_id')->constrained('invoices');
             $table->decimal('discount')->nullable();
-            $table->decimal('vat')->nullable();
-            $table->decimal('grand_price');
+            $table->double('vat')->nullable();
+            $table->double('grand_price');
             $table->timestamps();
         });
     }

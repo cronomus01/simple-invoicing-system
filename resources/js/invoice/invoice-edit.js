@@ -48,7 +48,7 @@ function addTableRow() {
                 <input type="number" min="0" class="w-full h-full quantity" value="0" name="quantity[]">
             </td>
             <td class="p-3">
-                <input type="text" class="w-full h-full base-price" name="base_price[]">
+                <input type="number" min="0" class="w-full h-full base-price" name="base_price[]">
             </td>
             <td class="p-3">
                 <input type="text" class="w-full h-full" value="0" disabled>

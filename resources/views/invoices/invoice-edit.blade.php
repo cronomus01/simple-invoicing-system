@@ -7,7 +7,7 @@
         </aside>
         <section class="print:w-screen print:h-full print:absolute print:inset-0">
             <form action={{ route('invoice.update', ['invoice' => isset($invoice->id) ? $invoice->id : 0]) }} method="POST"
-                class="border bg-white px-4 py-6 print:border-0" id="invoice-form">
+                class="border p-5 bg-white print:border-0 print:p-0" id="invoice-form">
                 @method('PUT')
                 @csrf
                 <input type="hidden" name="customer_id" id="customer-input-id"
@@ -69,19 +69,19 @@
                         <table class="w-full text-sm text-left rtl:text-right border">
                             <thead class="text-xs uppercase bg-slate-200">
                                 <tr>
-                                    <th scope="col" class="px-6 py-3">
+                                    <th scope="col" class="px-6 py-3 print:py-1">
                                         Type
                                     </th>
-                                    <th scope="col" class="px-6 py-3">
+                                    <th scope="col" class="px-6 py-3 print:py-1">
                                         Product / Service
                                     </th>
-                                    <th scope="col" class="px-6 py-3">
+                                    <th scope="col" class="px-6 py-3 print:py-1">
                                         Quantity
                                     </th>
-                                    <th scope="col" class="px-6 py-3">
+                                    <th scope="col" class="px-6 py-3 print:py-1">
                                         Base Price
                                     </th>
-                                    <th scope="col" class="px-6 py-3">
+                                    <th scope="col" class="px-6 py-3 print:py-1">
                                         Subtotal
                                     </th>
                                 </tr>
@@ -92,26 +92,26 @@
                                         <tr class="bg-white">
                                             <input type="hidden" class="w-full h-full" name="invoice_item[]"
                                                 value="{{ $item->id }}">
-                                            <td class="p-3">
+                                            <td class="p-3 border-b print:border-b">
                                                 <input type="text" class="w-full h-full" name="type[]"
                                                     value="{{ $item->type }}">
                                             </td>
-                                            <td class="p-3">
+                                            <td class="p-3 border-b print:border-b">
                                                 <input type="text" class="w-full h-full" name="product_service[]"
                                                     value="{{ $item->product_service }}">
                                             </td>
-                                            <td class="p-3">
+                                            <td class="p-3 border-b print:border-b">
                                                 <input type="number" min="0" class="w-full h-full quantity print:hidden"
                                                     value={{ $item->quantity }} name="quantity[]">
                                                 <p class="screen:hidden">
                                                     {{ $item->quantity }}
                                                 </p>
                                             </td>
-                                            <td class="p-3">
-                                                <input type="text" class="w-full h-full base-price" name="base_price[]"
-                                                    value="{{ $item->base_price }}">
+                                            <td class="p-3 border-b print:border-b">
+                                                <input type="number" class="w-full h-full base-price" name="base_price[]"
+                                                    value="{{ $item->base_price }}" min="0">
                                             </td>
-                                            <td class="p-3">
+                                            <td class="p-3 border-b print:border-b">
                                                 <input type="text" class="w-full h-full" value="{{ $item->subtotal }}"
                                                     disabled>
                                             </td>
@@ -143,7 +143,7 @@
                                     Total
                                 </td>
                                 <td class="px-2 text-right">
-                                    P{{ $invoice->items->sum('subtotal') }}
+                                    P{{ number_format($invoice->items->sum('subtotal')) }}
                                 </td>
                             </tr>
                             <tr class="border-b">
@@ -151,11 +151,8 @@
                                     Discount
                                 </td>
                                 <td class="flex items-center justify-end">
-                                    <h1>
-
-                                    </h1>
                                     <input type="text" class="pl-2 text-right" name="discount"
-                                        value="P{{ $discountedPrice }} ({{ isset($discountedPrice) ? intval($invoice->total->discount) : 0 }}%) " />
+                                        value="{{ $invoice->items->sum('subtotal') == $discountedPrice ? '' : 'P' . number_format($discountedPrice, 2) }} ({{ $invoice->total ? intval($invoice->total->discount) : 0 }}%) " />
                                 </td>
                             </tr>
                             <tr class="border-b">
@@ -163,15 +160,15 @@
                                     Vat
                                 </td>
                                 <td class="px-2 text-right">
-                                    P{{ isset($invoice->total) ? $invoice->total->vat : 0 }}
+                                    P{{ isset($invoice->total) ? number_format($invoice->total->vat, 2) : 0 }}
                                 </td>
                             </tr>
-                            <tr class="border-b bg-slate-50">
+                            <tr class="border-b bg-slate-200">
                                 <td class="py-1 text-right font-bold">
                                     Grand Price
                                 </td>
                                 <td class="px-2 text-right">
-                                    P{{ isset($invoice->total) ? $invoice->total->grand_price : 0 }}
+                                    P{{ isset($invoice->total) ? number_format($invoice->total->grand_price, 2) : 0 }}
                                 </td>
                             </tr>
                         </tbody>
@@ -214,6 +211,7 @@
             <x-customer-list :customers="$customers" />
         </x-modal>
     </section>
+    <x-print-invoice :invoice="$invoice" discountedPrice="{{ $discountedPrice }}" />
 @endsection
 
 
