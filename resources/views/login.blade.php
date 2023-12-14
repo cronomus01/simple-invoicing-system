@@ -25,6 +25,13 @@
             <input type="password" name="password" placeholder="Enter your password">
             <button type="submit" class="bg-slate-50 hover:bg-slate-100">Login</button>
         </form>
+        <section class="text-sm opacity-60">
+            <h1>Account</h1>
+            <article>
+                <p>Username: example_user@example.com</p>
+                <p>Password: password</p>
+            </article>
+        </section>
         <small>All rights reserved</small>
         <figure class="absolute bottom-0 left-0 w-[25%]">
             <img src="{{ asset('assets/icons/undraw_knowledge_re_5v9l.svg') }}" alt="woman looking on a instructions">
