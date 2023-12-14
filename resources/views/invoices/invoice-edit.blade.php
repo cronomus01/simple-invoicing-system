@@ -1,9 +1,9 @@
-@extends('layout.base', ['payment' => $payment])
+@extends('layout.base')
 
 @section('content')
     <section class="grid grid-cols-desktop gap-2 print:p-0">
         <aside class="h-[100vh] pr-2 border-r overflow-y-scroll">
-            <x-invoice-list :invoices="$invoices" />
+            <x-invoice-list :invoices="$invoices" :latest="$invoiceLatest" />
         </aside>
         <section class="print:w-screen print:h-full print:absolute print:inset-0">
             <form action={{ route('invoice.update', ['invoice' => isset($invoice->id) ? $invoice->id : 0]) }} method="POST"

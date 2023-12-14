@@ -2,6 +2,7 @@
 
 namespace App\View\Components;
 
+use App\Models\Invoice;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
@@ -12,7 +13,7 @@ class InvoiceList extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(public Collection $invoices)
+    public function __construct(public Collection $invoices, public Invoice $latest)
     {
     }
 

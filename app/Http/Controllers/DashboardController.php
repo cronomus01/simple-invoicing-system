@@ -14,8 +14,8 @@ class DashboardController extends Controller
     public function index()
     {
         $invoices = Invoice::all();
-        $invoice = Invoice::first();
-        $payment = Payment::first();
+        $invoice = Invoice::latest()->first();
+        $payment = Payment::latest()->first();
 
         return view('dashboard', compact('invoices', 'invoice', 'payment'));
     }

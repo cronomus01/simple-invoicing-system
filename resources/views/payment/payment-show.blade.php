@@ -1,4 +1,4 @@
-@extends('layout.base', ['payment' => $payment, 'invoice' => $invoice])
+@extends('layout.base')
 
 @section('content')
     {{-- <section class="mx-5">
@@ -141,7 +141,7 @@
     </section> --}}
     <section class="grid grid-cols-desktop gap-2 pt-5 print:hidden">
         <aside class="h-[100vh] pr-2 border-r overflow-y-scroll">
-            <x-payment-list :payments="$payments" />
+            <x-payment-list :payments="$payments" :latest="$paymentLatest" />
         </aside>
         <div class="flex gap-3 items-start">
             @isset($payment)
@@ -159,6 +159,7 @@
                     </p>
                     <p>Type: {{ ucwords(Str::replace('-', ' ', $payment->type_of_payment)) }}</p>
                     <p>Date: {{ date('F d, Y', strtotime($payment->payment_date)) }}</p>
+                    <p>Time: {{ date('h:i A', strtotime($payment->created_at)) }}</p>
                     <p>Paid: P{{ isset($invoice->total) ? number_format($invoice->total->grand_price, 2) : 0 }}</p>
                     <menu class="flex justify-between print:hidden mt-3">
                         <li class="w-full">

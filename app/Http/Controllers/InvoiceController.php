@@ -82,10 +82,11 @@ class InvoiceController extends Controller
     public function edit(string $id)
     {
         $invoice = Invoice::find($id);
-        $payment = Payment::first();
-        $invoices = Invoice::all();
+        $payment = Payment::latest()->first();
+        $invoices = Invoice::orderBy('id', 'desc')->get();
         $customers = User::all();
         $users = User::get();
+        $invoiceLatest = Invoice::latest()->first();
 
         $discount = 0;
         $total = $invoice->items->sum('subtotal');
@@ -97,7 +98,7 @@ class InvoiceController extends Controller
         $discountedPrice = $total - $discount;
 
 
-        return view('invoices.invoice-edit', compact('invoice', 'invoices', 'users', 'customers', 'discountedPrice', 'payment'));
+        return view('invoices.invoice-edit', compact('invoice', 'invoices', 'users', 'customers', 'discountedPrice', 'payment', 'invoiceLatest'));
     }
 
     /**

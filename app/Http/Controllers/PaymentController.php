@@ -74,9 +74,10 @@ class PaymentController extends Controller
      */
     public function show(string $id)
     {
-        $invoice = Invoice::first();
-        $payments = Payment::all();
+        $invoice = Invoice::latest()->first();
+        $payments = Payment::orderBy('id', 'desc')->get();
         $payment = Payment::find($id);
+        $paymentLatest = Payment::latest()->first();
 
         $discount = 0;
         $total = $invoice->items->sum('subtotal');
@@ -87,7 +88,7 @@ class PaymentController extends Controller
 
         $discountedPrice = $total - $discount;
 
-        return view('payment.payment-show', compact('invoice', 'payments', 'payment', 'discountedPrice'));
+        return view('payment.payment-show', compact('invoice', 'payments', 'payment', 'discountedPrice', 'paymentLatest'));
     }
 
     /**
