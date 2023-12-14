@@ -1,7 +1,7 @@
 @extends('layout.base', ['invoices' => $invoices, 'invoice' => $invoice])
 
 @section('content')
-    <section class="mt-5 w-2/4 relative">
+    <section class="mt-5 w-2/4 relative px-3">
         <!--defines theme-->
         <h1 class="text-2xl uppercase mb-3">Invoicing System</h1>
         <!--writes independent content relating to that theme-->

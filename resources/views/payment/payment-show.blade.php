@@ -139,11 +139,11 @@
             <button type="submit" class="border px-3 py-1 rounded-md mt-2" form="invoice-item">Cancel</button>
         </div>
     </section> --}}
-    <section class="grid grid-cols-desktop gap-2 pt-5 print:hidden">
-        <aside class="h-[100vh] pr-2 border-r overflow-y-scroll">
+    <section class="grid grid-cols-desktop gap-2 print:hidden px-3">
+        <aside class="h-[100vh] pr-2 border-r overflow-y-scroll basis-2/4">
             <x-payment-list :payments="$payments" :latest="$paymentLatest" />
         </aside>
-        <div class="flex gap-3 items-start">
+        <div class="flex gap-3 items-start mt-3">
             @isset($payment)
                 <div class="p-5 border bg-white basis-[32em]">
                     <h1 class="text-lg uppercase mb-3">Payment Record</h1>

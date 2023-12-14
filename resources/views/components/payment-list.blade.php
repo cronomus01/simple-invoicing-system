@@ -1,4 +1,4 @@
-<div class="print:hidden">
+<div class="print:hidden mt-3">
     <ul class="space-y-2">
         @isset($payments)
             @foreach ($payments as $payment)

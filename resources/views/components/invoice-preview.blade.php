@@ -1,6 +1,6 @@
-<div class="{{ $hidden ? 'absolute inset-0 bg-white screen:p-5 print:flex flex-col justify-between screen:hidden' : 'bg-white border p-5 relative max-w-[70em]' }}"
+<div class="{{ $hidden ? 'absolute inset-0 bg-white screen:p-5 print:flex flex-col justify-between screen:hidden' : 'bg-white border p-5 relative max-w-[70em] flex justify-between flex-col' }}"
     id="print-design">
-    <div class="min-h-[65vh]">
+    <div>
         <section class="flex justify-between text-right items-start border-b pb-5">
             <figure class="">
                 <img src="{{ asset('assets/icons/irefrans-cosme.png') }}" alt="irefrans cosme logo"
@@ -140,7 +140,8 @@
             placeat.
         </p>
     </section>
-    <div class="absolute inset-0 flex justify-center items-center text-9xl {{ !$payment ? 'print:hidden' : '' }}">
+    <div
+        class="absolute inset-0 flex justify-center items-center text-9xl {{ !$payment ? 'print:hidden' : 'screen:hidden' }}">
         <h1 class="uppercase font-extrabold text-slate-500 rotate-[-30deg] opacity-20">Paid</h1>
     </div>
 </div>

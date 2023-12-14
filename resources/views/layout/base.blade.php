@@ -11,7 +11,7 @@
     @vite('resources/css/app.css')
 </head>
 
-<body class="grid grid-cols-desktop gap-3 bg-slate-50 relative h-full">
+<body class="grid grid-cols-desktop bg-slate-50 relative h-full">
     <aside class="print:hidden border-r px-3 py-2 bg-slate-100">
         <div>
             <x-nav type="aside-nav" />
@@ -58,7 +58,7 @@
             {{-- <x-invoice-list :invoices="$invoices" /> --}}
         </div>
     </aside>
-    <main class="h-full pr-3 pb-4">
+    <main class="h-full">
         <x-nav type="content-nav" />
         @yield('content')
     </main>

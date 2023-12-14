@@ -1,20 +1,20 @@
 @extends('layout.base')
 
 @section('content')
-    <div class="flex gap-5 items-start pr-2">
+    <div class="flex gap-3 items-start px-3 mt-3 h-full">
         @isset($invoice)
             <form action="{{ route('payment.store', ['payment' => $invoice->id]) }}" method="POST"
-                class="mt-5 border p-5 bg-white w-[40%]">
+                class="border p-5 bg-white w-[30em]">
                 @method('POST')
                 @csrf
                 <input type="hidden" value="{{ $invoice->id }}" name="invoice_id">
                 <input type="hidden" value="{{ $paymentNumber }}" name="payment_number">
-                <div class="flex justify-between flex-col uppercase mb-3">
-                    <h2 class="text-lg">Payment</h2>
-                    <p>No. #{{ Str::limit($paymentNumber, 8, '') }}
-                    </p>
-                </div>
                 <div>
+                    <h2 class="text-lg">Payment</h2>
+                    <p>
+                        <span>No.</span>
+                        <span class="uppercase">#{{ Str::limit($paymentNumber, 8, '') }}</span>
+                    </p>
                     <table class="text-sm  rtl:text-right w-full">
                         <tbody class="leading-6 uppercase text-sm">
                             <tr>
@@ -97,7 +97,7 @@
                 </menu>
             </form>
         @endisset
-        <section class="mt-5">
+        <section class="h-full">
             <x-invoice-preview :invoice="$invoice" discountedPrice="{{ $discountedPrice }}" :hidden="false"
                 :payment="true" />
         </section>

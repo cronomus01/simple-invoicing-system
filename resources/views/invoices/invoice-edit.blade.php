@@ -1,11 +1,11 @@
 @extends('layout.base')
 
 @section('content')
-    <section class="grid grid-cols-desktop gap-2 print:p-0">
-        <aside class="h-[100vh] pr-2 border-r overflow-y-scroll">
+    <section class="flex gap-2 print:p-0 px-3">
+        <aside class="h-[100vh] pr-2 border-r overflow-y-scroll basis-2/4">
             <x-invoice-list :invoices="$invoices" :latest="$invoiceLatest" />
         </aside>
-        <section class="print:w-screen print:h-full print:absolute print:inset-0">
+        <section class="print:w-screen print:h-full print:absolute print:inset-0 mt-3 basis-full">
             <form action={{ route('invoice.update', ['invoice' => isset($invoice->id) ? $invoice->id : 0]) }} method="POST"
                 class="border p-5 bg-white print:border-0 print:p-0" id="invoice-form">
                 @method('PUT')

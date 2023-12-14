@@ -1,7 +1,7 @@
 <div class="print:hidden">
     @switch($type)
         @case('content-nav')
-            <nav class="py-3">
+            <nav class="py-3 px-3  border-b">
                 <ul class="flex justify-between">
                     <li>
                         <p class="text-gray-500 font-semibold">
@@ -20,9 +20,13 @@
         @break
 
         @case('aside-nav')
-            <nav>
-                <h1>Logo</h1>
-            </nav>
+            <figure class="p-1 flex justify-center">
+                <div class="p-2 bg-white rounded-full">
+                    <img src="{{ asset('assets/icons/irefrans-cosme.png') }}"
+                        alt="irefrans-cosme.png"aria-details="Capital I and C that intersects the bottom I and side of the C with Irefrans Cosme in the middle"
+                        class="w-8 rounded-full bg-white">
+                </div>
+            </figure>
         @break
 
         @default

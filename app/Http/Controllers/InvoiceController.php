@@ -108,10 +108,12 @@ class InvoiceController extends Controller
     {
         $grandPrice = 0;
 
+        $invoice = Invoice::where('id', $id)->first();
+
         try {
             DB::beginTransaction();
             // Update invoice customer
-            Invoice::where('id', $id)->update([
+            $invoice->update([
                 'customer_id' => $request->customer_id
             ]);
 
@@ -170,24 +172,22 @@ class InvoiceController extends Controller
             // Update invoice customer
             $invoiceTotal = InvoiceTotal::where('invoice_id', $id)->first();
 
-            // if (!$request->discount == '') {
-            //     throw new \ErrorException('discount is null');
-            // }
-
             $vat = $grandPrice * 0.12;
             $discount = $grandPrice * intval($request->discount) / 100;
 
             $grandPrice = ($grandPrice - $discount);
             $grandPriceWithVat = ($grandPrice * 0.12) + $grandPrice;
 
-            if (!$invoiceTotal) {
+            if (count($invoice->items->all()) > 0 && !$invoiceTotal) {
                 InvoiceTotal::create([
                     'invoice_id' => $id,
                     'grand_price' => $grandPriceWithVat,
                     'discount' => intval($request->discount),
                     'vat' => $vat,
                 ]);
-            } else {
+            }
+
+            if ($invoiceTotal) {
                 $invoiceTotal->update([
                     'grand_price' => $grandPriceWithVat,
                     'discount' => intval($request->discount),
@@ -195,11 +195,9 @@ class InvoiceController extends Controller
                 ]);
             }
 
-
-
             Db::commit();
         } catch (\Exception $e) {
-            throw new \Exception($e->getMessage());
+            // throw new \Exception($e->getMessage());
             report($e);
 
             DB::rollBack(); // <= Rollback in case of an exception
