@@ -84,10 +84,12 @@
                 </div>
                 <menu>
                     <li>
-                        <button type="submit" class="px-3 py-1 border rounded mt-2 bg-slate-200 hover:bg-slate-300">Pay
-                            Invoice</button>
+                        <button type="submit"
+                            class="px-4 py-1 rounded mt-2 bg-slate-200 hover:shadow hover:text-white hover:bg-slate-400"
+                            id="print">Pay Invoice</button>
                         <a href="{{ route('dashboard.index') }}">
-                            <button class="px-3 py-1 border rounded mt-2 hover:bg-slate-100">
+                            <button type="submit"
+                                class="px-4 py-1 rounded mt-2 bg-slate-300 hover:shadow hover:text-white hover:bg-slate-400">
                                 Cancel
                             </button>
                         </a>

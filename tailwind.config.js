@@ -13,7 +13,7 @@ content: [
         },
         gridTemplateColumns: {
           // Simple 16 column grid
-          'desktop': '17em 1fr',
+          'desktop': '18em 1fr',
           'mobile': '5em 1fr',
         },
         gridTemplateRows: {

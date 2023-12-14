@@ -140,20 +140,26 @@
         </div>
     </section> --}}
     <section class="grid grid-cols-desktop gap-2 pt-5 print:hidden">
-        <aside class="overflow-y-auto h-[90vh] pr-2">
+        <aside class="h-[100vh] pr-2 border-r overflow-y-scroll">
             <x-payment-list :payments="$payments" />
         </aside>
         <div class="flex gap-3 items-start">
             @isset($payment)
-                <div class="p-5 border bg-white basis-[30em]">
+                <div class="p-5 border bg-white basis-[32em]">
                     <h1 class="text-lg uppercase mb-3">Payment Record</h1>
-                    <h2>Record No: <span class="uppercase">#{{ Str::limit($payment->payment_record_number, '8', '') }}</span>
+                    <h2>
+                        <span>Record No:</span>
+                        <span class="uppercase">#{{ Str::limit($payment->payment_record_number, '8', '') }}</span>
                     </h2>
-                    <p>OR No: <span class="uppercase">
-                            #{{ Str::limit($payment->or_number, '8', '') }}</span></p>
+                    <p>
+                        <span>OR No: </span>
+                        <span class="uppercase">
+                            #{{ Str::limit($payment->or_number, '8', '') }}
+                        </span>
+                    </p>
                     <p>Type: {{ ucwords(Str::replace('-', ' ', $payment->type_of_payment)) }}</p>
                     <p>Date: {{ date('F d, Y', strtotime($payment->payment_date)) }}</p>
-                    <p>Cost: P{{ isset($invoice->total) ? number_format($invoice->total->grand_price, 2) : 0 }}</p>
+                    <p>Paid: P{{ isset($invoice->total) ? number_format($invoice->total->grand_price, 2) : 0 }}</p>
                     <menu class="flex justify-between print:hidden mt-3">
                         <li class="w-full">
                             <button class="border px-3 py-1 rounded mt-2 bg-slate-100 hover:shadow w-full"

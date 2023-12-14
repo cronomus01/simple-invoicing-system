@@ -6,8 +6,8 @@
                     <a href="{{ route('payment.show', ['payment' => $payment->id]) }}"
                         class="{{ Str::replace('/', ' / ', Str::replaceFirst('/', '', Str::replace(Request::root(), '', Request::url()))) ==
                         'payment / ' . $payment->id
-                            ? 'border block px-2 py-1  bg-slate-100 '
-                            : 'border block px-2 py-1 bg-white hover:bg-slate-100' }}">
+                            ? 'border block px-2 py-1  bg-slate-200 '
+                            : 'border block px-2 py-1 bg-white hover:bg-slate-200' }}">
                         <h2>Record No: <span
                                 class="uppercase">#{{ Str::limit($payment->payment_record_number, '8', '') }}</span></h2>
                         <p>OR No: <span class="uppercase">

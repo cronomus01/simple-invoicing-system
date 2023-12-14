@@ -1,8 +1,8 @@
 @extends('layout.base', ['payment' => $payment])
 
 @section('content')
-    <section class="grid grid-cols-desktop gap-2 pt-5 print:p-0">
-        <aside class="overflow-y-auto h-[90vh] pr-2">
+    <section class="grid grid-cols-desktop gap-2 print:p-0">
+        <aside class="h-[100vh] pr-2 border-r overflow-y-scroll">
             <x-invoice-list :invoices="$invoices" />
         </aside>
         <section class="print:w-screen print:h-full print:absolute print:inset-0">
@@ -178,17 +178,27 @@
             </form>
             <menu class="flex justify-between print:hidden">
                 <li>
-                    <button type="submit" class="border px-4 py-1 rounded mt-2 bg-slate-300 hover:shadow"
-                        form="invoice-form">Save</button>
+                    <button type="submit"
+                        class="px-4 py-1 rounded mt-2 bg-slate-300 hover:shadow hover:text-white hover:bg-slate-400"
+                        form="invoice-form">
+                        Save
+                    </button>
                     <a href="{{ route('dashboard.index') }}">
-                        <button type="button" class="border px-4 py-1 rounded mt-2 bg-slate-50 hover:shadow"
-                            form="invoice-item">Cancel</button>
+                        <button type="submit"
+                            class="px-4 py-1 rounded mt-2 bg-slate-200 hover:shadow hover:text-white hover:bg-slate-400">
+                            Cancel
+                        </button>
                     </a>
                 </li>
                 <li>
-                    <button class="border px-3 py-1 rounded mt-2 bg-slate-100 hover:shadow" id="print">Print</button>
+                    <button type="submit"
+                        class="px-4 py-1 rounded mt-2 bg-slate-200 hover:shadow hover:text-white hover:bg-slate-400"
+                        id="print">Print</button>
                     <a href="{{ route('payment.create', ['invoice' => $invoice->id]) }}">
-                        <button class="border px-3 py-1 rounded mt-2 bg-slate-300 hover:shadow">Create Payment</button>
+                        <button type="submit"
+                            class="px-4 py-1 rounded mt-2 bg-slate-300 hover:shadow hover:text-white hover:bg-slate-400">
+                            Create Payment
+                        </button>
                     </a>
                 </li>
             </menu>

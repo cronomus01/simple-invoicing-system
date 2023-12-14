@@ -6,8 +6,8 @@
                     <a href="{{ route('invoice.edit', ['invoice' => $invoice->id]) }}"
                         class="{{ Str::replace('/', ' / ', Str::replaceFirst('/', '', Str::replace(Request::root(), '', Request::url()))) ==
                         'invoice / ' . $invoice->id . ' / edit'
-                            ? 'border block px-2 py-1  bg-slate-100 '
-                            : 'border block px-2 py-1 bg-white hover:bg-slate-100' }}">
+                            ? 'border block px-2 py-1  bg-slate-200 '
+                            : 'border block px-2 py-1 bg-white hover:bg-slate-200' }}">
                         <h2>Invoice: <span class="uppercase">#{{ Str::limit($invoice->invoice_number, '8', '') }}</span></h2>
                         <p>Customer: {{ isset($invoice->customer->name) ? $invoice->customer->name : 'N/A' }}</p>
                         <p>Date: {{ isset($invoice) ? date('F d, Y', strtotime($invoice->invoice_date)) : '' }}</p>

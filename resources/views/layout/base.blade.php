@@ -11,8 +11,8 @@
     @vite('resources/css/app.css')
 </head>
 
-<body class="grid grid-cols-desktop gap-3 p-3 bg-slate-50 relative h-full">
-    <aside class="print:hidden">
+<body class="grid grid-cols-desktop gap-3 bg-slate-50 relative h-full">
+    <aside class="print:hidden border-r px-3 py-2 bg-slate-100">
         <div>
             <x-nav type="aside-nav" />
             <x-search-invoice />
@@ -22,8 +22,8 @@
                         <a href="{{ route('dashboard.index') }}"
                             class="{{ Str::replace('/', ' / ', Str::replaceFirst('/', '', Str::replace(Request::root(), '', Request::url()))) ==
                             'dashboard'
-                                ? 'border block px-2 py-1  bg-slate-100 '
-                                : 'border block px-2 py-1 bg-white hover:bg-slate-100' }}">
+                                ? 'border block px-2 py-1  bg-slate-200 shadow-sm'
+                                : 'border block px-2 py-1 bg-white hover:bg-slate-200 hover:text-black text-gray-500' }}">
                             <span>Dashboard</span>
                         </a>
                     </li>
@@ -33,8 +33,8 @@
                                 <a href="{{ route('invoice.edit', ['invoice' => $invoice->id]) }}"
                                     class="{{ Str::replace('/', ' / ', Str::replaceFirst('/', '', Str::replace(Request::root(), '', Request::url()))) ==
                                     'invoice / ' . $invoice->id . ' / edit'
-                                        ? 'border block px-2 py-1  bg-slate-100 '
-                                        : 'border block px-2 py-1 bg-white hover:bg-slate-100' }}">
+                                        ? 'border block px-2 py-1  bg-slate-200 shadow-sm'
+                                        : 'border block px-2 py-1 bg-white hover:bg-slate-200 hover:text-black text-gray-500' }}">
                                     <span>Invoices</span>
                                 </a>
                             @endif
@@ -46,8 +46,8 @@
                                 <a href="{{ route('payment.show', ['payment' => $payment->id]) }}"
                                     class="{{ Str::replace('/', ' / ', Str::replaceFirst('/', '', Str::replace(Request::root(), '', Request::url()))) ==
                                     'payment / ' . $payment->id
-                                        ? 'border block px-2 py-1  bg-slate-100 '
-                                        : 'border block px-2 py-1 bg-white hover:bg-slate-100' }}">
+                                        ? 'border block px-2 py-1  bg-slate-200 shadow-sm'
+                                        : 'border block px-2 py-1 bg-white hover:bg-slate-200 hover:text-black text-gray-500' }}">
                                     <span>Payments</span>
                                 </a>
                             @endif
@@ -58,7 +58,7 @@
             {{-- <x-invoice-list :invoices="$invoices" /> --}}
         </div>
     </aside>
-    <main class="h-full pb-5">
+    <main class="h-full pr-3 pb-4">
         <x-nav type="content-nav" />
         @yield('content')
     </main>

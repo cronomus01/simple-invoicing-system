@@ -1,7 +1,7 @@
 <div class="print:hidden">
     @switch($type)
         @case('content-nav')
-            <nav>
+            <nav class="py-3">
                 <ul class="flex justify-between">
                     <li>
                         <p class="text-gray-500 font-semibold">

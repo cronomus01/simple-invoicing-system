@@ -1,6 +1,6 @@
-<div class="{{ $hidden ? 'absolute inset-0 bg-white screen:p-5 print:flex flex-col justify-between screen:hidden' : 'bg-white border p-5 relative' }}"
+<div class="{{ $hidden ? 'absolute inset-0 bg-white screen:p-5 print:flex flex-col justify-between screen:hidden' : 'bg-white border p-5 relative max-w-[70em]' }}"
     id="print-design">
-    <div>
+    <div class="min-h-[65vh]">
         <section class="flex justify-between text-right items-start border-b pb-5">
             <figure class="">
                 <img src="{{ asset('assets/icons/irefrans-cosme.png') }}" alt="irefrans cosme logo"
