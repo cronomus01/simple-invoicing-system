@@ -172,10 +172,20 @@ class InvoiceController extends Controller
             // Update invoice customer
             $invoiceTotal = InvoiceTotal::where('invoice_id', $id)->first();
 
+            // Vat without discount
             $vat = $grandPrice * 0.12;
+
             $discount = $grandPrice * intval($request->discount) / 100;
 
+            // Current price with discount
             $grandPrice = ($grandPrice - $discount);
+
+            // Vat with discount
+            if ($request->discount) {
+                $vat = $grandPrice * 0.12;
+            }
+
+            // Overall price
             $grandPriceWithVat = ($grandPrice * 0.12) + $grandPrice;
 
             if (count($invoice->items->all()) > 0 && !$invoiceTotal) {

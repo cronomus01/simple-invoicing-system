@@ -33,6 +33,8 @@ class PaymentController extends Controller
 
         if ($invoice->total) {
             $discount = $total * $invoice->total->discount / 100;
+        } else {
+            return redirect()->route('invoice.edit', ['invoice' => $invoiceId]);
         }
 
         $discountedPrice = $total - $discount;

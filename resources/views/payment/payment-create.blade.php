@@ -86,7 +86,7 @@
                     <li>
                         <button type="submit"
                             class="px-4 py-1 rounded mt-2 bg-slate-200 hover:shadow hover:text-white hover:bg-slate-400"
-                            id="print">Pay Invoice</button>
+                            id="print">Save Payment</button>
                         <a href="{{ route('dashboard.index') }}">
                             <button type="submit"
                                 class="px-4 py-1 rounded mt-2 bg-slate-300 hover:shadow hover:text-white hover:bg-slate-400">

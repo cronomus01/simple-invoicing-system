@@ -42,7 +42,37 @@
                             </p>
                         </article>
                         <article class="mt-2 gap-5 relative max-w-fit print:mt-0 print:hidden">
-                            <label for="" class="block">Name:
+                            <table class="space-y-1">
+                                <tbody>
+                                    <tr>
+
+                                        <td>
+                                            <label for="customer">
+                                                <span>Name:</span>
+                                            </label>
+
+                                        </td>
+                                        <td>
+                                            <input type="text" id="customer-input"
+                                                value="{{ isset($invoice->customer->name) ? $invoice->customer->name : 'N/A' }}"
+                                                class="border px-2 rounded pointer-events-none customer-input print:px-0">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label for="" class="block">
+                                                <span>Email:</span>
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <input type="text" id="customer-input-email"
+                                                value="{{ isset($invoice->customer->name) ? $invoice->customer->email : 'N/A' }}"
+                                                class="border px-2 rounded pointer-events-none customer-input-email print:px-0">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            {{-- <label for="" class="block">Name:
                                 <input type="text" id="customer-input"
                                     value="{{ isset($invoice->customer->name) ? $invoice->customer->name : 'N/A' }}"
                                     class="border px-2 rounded pointer-events-none customer-input print:px-0">
@@ -51,7 +81,7 @@
                                 <input type="text" id="customer-input-email"
                                     value="{{ isset($invoice->customer->name) ? $invoice->customer->email : 'N/A' }}"
                                     class="border px-2 rounded pointer-events-none customer-input-email print:px-0">
-                            </label>
+                            </label> --}}
                             <menu class="absolute top-0 right-[-2em] mt-0 print:hidden">
                                 <li>
                                     <button type="button" id="edit-button">
@@ -194,12 +224,14 @@
                     <button type="submit"
                         class="px-4 py-1 rounded mt-2 bg-slate-200 hover:shadow hover:text-white hover:bg-slate-400"
                         id="print">Print</button>
-                    <a href="{{ route('payment.create', ['invoice' => $invoice->id]) }}">
-                        <button type="submit"
-                            class="px-4 py-1 rounded mt-2 bg-slate-300 hover:shadow hover:text-white hover:bg-slate-400">
-                            Create Payment
-                        </button>
-                    </a>
+                    @if ($invoice->total)
+                        <a href="{{ route('payment.create', ['invoice' => $invoice->id]) }}">
+                            <button type="button"
+                                class="px-4 py-1 rounded mt-2 bg-slate-300 hover:shadow hover:text-white hover:bg-slate-400">
+                                Create Payment
+                            </button>
+                        </a>
+                    @endif
                 </li>
             </menu>
         </section>
