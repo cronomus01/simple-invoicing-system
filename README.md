@@ -1,5 +1,5 @@
 # Simple Invoicing System
-This is a exam offered by Hackazouk Inc.
+This is a Technical Exam offered by Hackazouk Inc.
 
 The master branch is an attempt of the Official Interview with a duration of 3 hours.
 
