@@ -60,6 +60,7 @@
                 </div>
             </fieldset>
             <fieldset class="mt-3">
+                <h2 class="text-lg uppercase">Select Customer</h2>
                 <x-customer-list :customers="$customers" />
             </fieldset>
             <menu class="mt-3">

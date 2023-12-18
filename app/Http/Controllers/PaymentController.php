@@ -49,10 +49,11 @@ class PaymentController extends Controller
     public function store(Request $request)
     {
         $invoice = Invoice::where('id', $request->invoice_id)->first();
+        $createdPayment = null;
         try {
             DB::beginTransaction();
             // Update invoice customer
-            Payment::create([
+            $createdPayment = Payment::create([
                 'type_of_payment' => $request->payment_type,
                 'invoice_id' => $request->invoice_id,
                 'payment_record_number' => $request->payment_number,
@@ -68,7 +69,7 @@ class PaymentController extends Controller
             DB::rollBack(); // <= Rollback in case of an exception
         }
 
-        return redirect()->route('dashboard.index');
+        return redirect()->route('payment.show', ['payment' => $createdPayment->id]);
     }
 
     /**

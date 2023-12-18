@@ -48,10 +48,12 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
+        $createdInvoice = null;
+
         try {
             DB::beginTransaction(); //Start transaction
 
-            Invoice::create([
+            $createdInvoice = Invoice::create([
                 'invoice_number' => $request->invoice,
                 'invoice_date' => now(),
                 'customer_id' => intval($request->customer_id)
@@ -64,7 +66,7 @@ class InvoiceController extends Controller
             DB::rollBack();
         }
 
-        return redirect('dashboard');
+        return redirect()->route('invoice.edit', ['invoice' => $createdInvoice->id]);
     }
 
 

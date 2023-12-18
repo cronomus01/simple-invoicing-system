@@ -21,8 +21,10 @@
             class="flex flex-col gap-3 justify-center [&>*]:border [&>*]:px-2 [&>*]:py-2 z-10">
             @method('POST')
             @csrf
-            <input type="text" name="email" placeholder="Enter your username">
-            <input type="password" name="password" placeholder="Enter your password">
+            <input type="text" name="email" placeholder="Enter your username" required="true"
+                class="focus:outline focus:border-slate-200 outline-slate-200 outline-2">
+            <input type="password" name="password" placeholder="Enter your password" required="true"
+                class="focus:outline focus:border-slate-200 outline-slate-200 outline-2">
             <button type="submit" class="bg-slate-50 hover:bg-slate-100">Login</button>
         </form>
         <section class="text-sm opacity-60">
